@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "420693277468-ii8rglcfkpru4m443v9dr3r4e4eojapp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.moviequiz",
+            "certificate_hash": "ae6a9028ff7a7715906904e14a17a96e04361cf7"
+          }
+        },
+        {
           "client_id": "420693277468-reirrel3qfdkjf04qj36je80hb6kdmtj.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PerfilFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_image_user"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+
+            android:layout_marginTop="40dp"
+            android:elevation="12dp"
+            android:innerRadius="0dp"
+            android:shape="ring"
+            android:thicknessRatio="1.9"
+            android:layout_marginStart="20dp"
+            app:cardBackgroundColor="#5A5A5A"
+            app:cardCornerRadius="65dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:innerRadius="0dp"
+                android:shape="ring"
+                android:thicknessRatio="1.9"
+                app:cardBackgroundColor="#5A5A5A"
+                app:cardCornerRadius="65dp">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_image_user_current"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    tools:srcCompat="@tools:sample/avatars" />
+            </com.google.android.material.card.MaterialCardView>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_nomeUser"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="#5A5A5A"
+            android:textSize="18sp"
+
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/cv_image_user"
+            app:layout_constraintTop_toTopOf="@+id/cv_image_user"
+            tools:text="Nome" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_emailUser"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="#5A5A5A"
+            android:textSize="18sp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_nomeUser"
+            app:layout_constraintTop_toBottomOf="@+id/tv_nomeUser"
+            tools:text="email@gmail.com" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_bioUser"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="#5A5A5A"
+            android:textSize="16sp"
+
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_emailUser"
+            app:layout_constraintTop_toBottomOf="@+id/tv_emailUser"
+            tools:text="Bio dadd dasd dasda dasd dasd dsah dsahdb dsahdb dasbd dasbd hsbad dasb djbas" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

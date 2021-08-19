@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/feed"
+        android:title="Feed"
+        android:contentDescription="Feed"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/perfil"
+        android:title="Perfil"
+        android:contentDescription="Perfil"
+        app:showAsAction="never"
+        />
+
+</menu>
