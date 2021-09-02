@@ -7,6 +7,7 @@
         android:title="Feed"
         android:contentDescription="Feed"
         app:showAsAction="ifRoom"
+        android:iconTint="@color/black"
         />
 
     <item
@@ -14,6 +15,7 @@
         android:title="Perfil"
         android:contentDescription="Perfil"
         app:showAsAction="never"
+        android:iconTint="@color/black"
         />
 
 </menu>

@@ -1,19 +1,28 @@
-package com.example.moviequiz
+package com.example.moviequiz.views
 
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.example.moviequiz.fragments.PerfilFragment
+import com.example.moviequiz.R
+import com.example.moviequiz.fragments.FeedFragment
+import com.example.moviequiz.repository.FirebaseRepository
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FieldValue
 
 class MainActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
+    private var googleSignClient : GoogleSignInClient? = null
+    private lateinit var firestoreRepository: FirebaseRepository
     private val TAG = "MAIN"
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {it ->
@@ -30,17 +39,30 @@ class MainActivity : AppCompatActivity() {
         return@OnNavigationItemSelectedListener false
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.toolbar_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_sair -> {
+                logout()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        firestoreRepository = FirebaseRepository()
+        googleSignClient = firestoreRepository.requestSignInOptions(this)
         mudarFragment("Feed", FeedFragment())
 
         db = FirebaseFirestore.getInstance()
-
-        val user: MutableMap<String, Any> = HashMap()
-        user["name"] = "Jardim Sandler"
-        user["photo"] = ""
-        user["create_at"] = FieldValue.serverTimestamp()
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigation.background = ColorDrawable(resources.getColor(R.color.appPrimary))
@@ -61,45 +83,13 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    private fun goProfile(app: AppCompatActivity) {
-//        val intent = Intent(applicationContext, ??????????::class.java)
-//        startActivity(intent)
-    }
-
     private fun logout() {
-//        googleSignClient?.signOut()?.addOnCompleteListener(this) { }
-        FirebaseAuth.getInstance().signOut();
-        val intent = Intent(applicationContext, LoginActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-
-    fun addUser(user: MutableMap<String, Any>) {
-        // Add a new document with a generated ID
-        db.collection("users")
-            .add(user)
-            .addOnSuccessListener { documentReference ->
-                Log.d(
-                    TAG,
-                    "DocumentSnapshot added with ID: " + documentReference.id
-                )
-            }
-            .addOnFailureListener { e -> Log.w(TAG, "Error adding document", e) }
-    }
-
-    fun getUsers() {
-        db.collection("users")
-            .get()
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    for (document in task.result!!) {
-                        Log.d(TAG, document.id + " => " + document.data)
-                    }
-                } else {
-                    Log.w(TAG, "Error getting documents.", task.exception)
-                }
-            }
+        googleSignClient?.signOut()?.addOnCompleteListener(this) {
+            FirebaseAuth.getInstance().signOut();
+            val intent = Intent(applicationContext, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
 }
