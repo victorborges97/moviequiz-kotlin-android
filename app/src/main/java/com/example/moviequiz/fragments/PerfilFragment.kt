@@ -55,7 +55,16 @@ class PerfilFragment() : Fragment() {
     }
 
     private fun visibleInfor(user: User) {
-        Picasso.get().load(user.url).fit().centerCrop().placeholder(R.drawable.ic_user).into(imageViewUser);
+        if(user.url != ""){
+            Picasso.get().load(user.url).fit()
+                .centerCrop()
+                .placeholder(R.drawable.ic_user)
+                .into(imageViewUser);
+        } else {
+            Picasso.get().load(R.drawable.ic_user).fit()
+                .centerCrop()
+                .into(imageViewUser);
+        }
         tvName.text = user.name
         tvEmail.text = user.email
     }

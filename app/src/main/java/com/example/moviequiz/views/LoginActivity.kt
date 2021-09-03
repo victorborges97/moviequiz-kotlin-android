@@ -152,7 +152,7 @@ class LoginActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun gotoProfileSign(user: FirebaseUser?) {
+    private fun gotoProfileSignIn(user: FirebaseUser?) {
         var nome = "${user?.displayName}"
         var nick = ""
         var email = "${user?.email}"
@@ -227,7 +227,7 @@ class LoginActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().signInWithCredential(credencial).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val user: FirebaseUser? = task.result.user
-                gotoProfileSign(user)
+                gotoProfileSignIn(user)
 
             } else {
                 snack(itView, "Algo deu errado no login"+ (task.exception?.message) +"")
