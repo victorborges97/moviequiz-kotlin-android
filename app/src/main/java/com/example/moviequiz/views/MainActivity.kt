@@ -3,16 +3,17 @@ package com.example.moviequiz.views
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.moviequiz.fragments.PerfilFragment
 import com.example.moviequiz.R
 import com.example.moviequiz.fragments.FeedFragment
+import com.example.moviequiz.models.User
 import com.example.moviequiz.repository.FirebaseRepository
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -21,8 +22,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
+    private lateinit var auth: FirebaseAuth
     private var googleSignClient : GoogleSignInClient? = null
     private lateinit var firestoreRepository: FirebaseRepository
+    private lateinit var user: User;
     private val TAG = "MAIN"
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {it ->
@@ -59,10 +62,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         firestoreRepository = FirebaseRepository()
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
+
         googleSignClient = firestoreRepository.requestSignInOptions(this)
         mudarFragment("Feed", FeedFragment())
-
-        db = FirebaseFirestore.getInstance()
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigation.background = ColorDrawable(resources.getColor(R.color.appPrimary))

@@ -26,8 +26,6 @@ class FeedFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_feed, container, false)
 
-        val btnSair = rootView.findViewById<Button>(R.id.btn_sair)
-
         return rootView
     }
 }

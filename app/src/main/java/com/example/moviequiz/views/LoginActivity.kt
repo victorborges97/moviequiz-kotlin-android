@@ -66,12 +66,11 @@ class LoginActivity : AppCompatActivity() {
         val registre = findViewById<TextView>(R.id.btn_register)
 
         btn_google.setOnClickListener {
-            progressBar_login.visibility = View.VISIBLE
+            changedUiLogin(true)
             signInGoogle()
         }
 
         btn_login.setOnClickListener {
-            progressBar_login.visibility = View.VISIBLE
             itView = it
             loginEmail()
         }
@@ -99,7 +98,6 @@ class LoginActivity : AppCompatActivity() {
         if (confirmation(mEmail, mPassword)) return
 
         changedUiLogin(true)
-
         mAuth.signInWithEmailAndPassword(mEmail, mPassword).addOnCompleteListener{ task ->
             if (task.isSuccessful) {
                 gotoProfile()
@@ -155,7 +153,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun gotoProfileSign(user: FirebaseUser?) {
-        var nome = "${user?.displayName}2"
+        var nome = "${user?.displayName}"
         var nick = ""
         var email = "${user?.email}"
         var url = "${user?.photoUrl}"
@@ -194,7 +192,7 @@ class LoginActivity : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 }
-                progressBar_login.visibility = View.INVISIBLE
+                changedUiLogin(false)
             }
     }
 
