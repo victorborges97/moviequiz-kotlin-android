@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5">
+        app:layout_constraintVertical_bias="0.4">
 
         <TextView
             android:id="@+id/titulo_register"
@@ -32,11 +32,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:id="@+id/imageView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:layout_constraintBottom_toTopOf="@+id/etNome"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titulo_register" />
+
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_nome"
+            android:id="@+id/etNome"
             android:layout_marginTop="10dp"
-            android:hint="Nome"
+            android:hint="@string/nome"
             android:textColorHint="@color/appPrimary"
             android:textColor="@color/appPrimary"
             android:imeOptions="actionNext"
@@ -45,10 +55,10 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titulo_register" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_nick"
+            android:id="@+id/etNick"
             android:layout_marginTop="10dp"
             android:hint="Usuario"
             android:textColorHint="@color/appPrimary"
@@ -59,12 +69,12 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_nome" />
+            app:layout_constraintTop_toBottomOf="@+id/etNome" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_email"
+            android:id="@+id/etEmail"
             android:layout_marginTop="10dp"
-            android:hint="E-mail"
+            android:hint="@string/Email"
             android:textColorHint="@color/appPrimary"
             android:textColor="@color/appPrimary"
             android:imeOptions="actionNext"
@@ -74,12 +84,12 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_nick" />
+            app:layout_constraintTop_toBottomOf="@+id/etNick" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_senha"
+            android:id="@+id/etSenha"
             android:layout_marginTop="10dp"
-            android:hint="Senha"
+            android:hint="@string/senha"
             android:textColorHint="@color/appPrimary"
             android:textColor="@color/appPrimary"
             android:imeOptions="actionNext"
@@ -89,12 +99,12 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_email" />
+            app:layout_constraintTop_toBottomOf="@+id/etEmail" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_confir"
+            android:id="@+id/etConfirm"
             android:layout_marginTop="10dp"
-            android:hint="Confirma Senha"
+            android:hint="@string/confirma_senha"
             android:textColorHint="@color/appPrimary"
             android:textColor="@color/appPrimary"
             android:imeOptions="actionDone"
@@ -104,24 +114,24 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_senha" />
+            app:layout_constraintTop_toBottomOf="@+id/etSenha" />
 
         <!--Botão de Login E-mail e Senha-->
         <Button
-            android:id="@+id/btn_registrar"
+            android:id="@+id/bRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cadastrar"
+            android:text="@string/cadastrar"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_confir" />
+            app:layout_constraintTop_toBottomOf="@+id/etConfirm" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ProgressBar
-        android:id="@+id/progressBar_register"
+        android:id="@+id/progressBarRegister"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

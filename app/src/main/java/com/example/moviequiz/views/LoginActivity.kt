@@ -7,10 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.moviequiz.R
 import com.example.moviequiz.Uteis.Uteis.snack
@@ -18,14 +15,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
-import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_login.*
 import java.util.*
 
 
@@ -33,12 +29,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     var googleSignClient : GoogleSignInClient? = null
     val RC_SIGN_IN = 1000
-
-    private lateinit var input_text_email_login: TextInputEditText
-    private lateinit var input_text_password_login: TextInputEditText
-    private lateinit var progressBar_login: ProgressBar
-    private lateinit var btn_login: AppCompatButton
-    private lateinit var btn_google: SignInButton
 
     private lateinit var itView: View
 
@@ -54,36 +44,27 @@ class LoginActivity : AppCompatActivity() {
             .build()
         googleSignClient = GoogleSignIn.getClient(this, gso)
 
-        val linearLayout: ConstraintLayout = findViewById(R.id.bg_linear)
-        aplicarLinearGradiente(linearLayout)
+        toApplyLinearGradiente(bgLinearLoginConstraint)
 
-        input_text_email_login = findViewById(R.id.input_text_email_login)
-        input_text_password_login = findViewById(R.id.input_text_password_login)
-        progressBar_login = findViewById(R.id.progressBar_login)
-        btn_login = findViewById(R.id.btn_login)
-        btn_google = findViewById(R.id.btn_google)
-
-        val registre = findViewById<TextView>(R.id.btn_register)
-
-        btn_google.setOnClickListener {
+        bGoogle.setOnClickListener {
             changedUiLogin(true)
             signInGoogle()
         }
 
-        btn_login.setOnClickListener {
+        bLogin.setOnClickListener {
             itView = it
-            loginEmail()
+            loginWithEmail()
         }
 
-        registre.setOnClickListener {
+        tvRegister.setOnClickListener {
             val intent = Intent(applicationContext, RegisterActivity::class.java)
             startActivity(intent)
         }
 
-        input_text_password_login.setOnEditorActionListener{ v, actionId, event ->
+        itPasswordLogin.setOnEditorActionListener { _, actionId, _ ->
             var handled = false
             if (EditorInfo.IME_ACTION_DONE == actionId || EditorInfo.IME_ACTION_UNSPECIFIED == actionId) {
-                loginEmail()
+                loginWithEmail()
                 handled = true
             }
             handled
@@ -91,53 +72,53 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun loginEmail() {
-        val mEmail = input_text_email_login.text.toString().trim()
-        val mPassword = input_text_password_login.text.toString().trim()
+    private fun loginWithEmail() {
+        val sEmail = itEmailLogin.text.toString().trim()
+        val sPassword = itPasswordLogin.text.toString().trim()
 
-        if (confirmation(mEmail, mPassword)) return
+        if (confirmation(sEmail, sPassword)) return
 
         changedUiLogin(true)
-        mAuth.signInWithEmailAndPassword(mEmail, mPassword).addOnCompleteListener{ task ->
+
+        mAuth.signInWithEmailAndPassword(sEmail, sPassword).addOnCompleteListener{ task ->
             if (task.isSuccessful) {
-                gotoProfile()
-                progressBar_login.visibility = View.INVISIBLE
+                gotoMain()
+                progressBarLogin.visibility = View.INVISIBLE
             } else {
                 changedUiLogin(false)
-                // Retorno de erro para o usuario
-                snack(itView, "Algo deu errado no login"+ (task.exception?.message) +"")
+                // Error return to user
+                snack(itView, "Não foi possível realizar o login"+ (task.exception?.message) +"")
             }
         }
     }
 
     private fun changedUiLogin(el: Boolean) {
         blocksFields(el)
-        progressBar_login.visibility = if(el) View.VISIBLE else View.INVISIBLE
-        btn_login.hint = if(el) "Entrando..." else "Entrar"
+        progressBarLogin.visibility = if(el) View.VISIBLE else View.INVISIBLE
+        bLogin.hint = if(el) "Entrando..." else "Entrar"
     }
 
     private fun blocksFields(b: Boolean) {
-        btn_login.isEnabled = !b
-        input_text_password_login.isEnabled = !b
-        input_text_email_login.isEnabled = !b
+        bLogin.isEnabled = !b
+        itPasswordLogin.isEnabled = !b
+        itEmailLogin.isEnabled = !b
     }
 
     private fun confirmation(mEmail: String, mPassword: String): Boolean {
         if (mEmail.isEmpty()) {
-            input_text_email_login.error = "Email is Required."
+            itEmailLogin.error = "Email is Required."
             return true
         }
         if (mPassword.isEmpty()) {
-            input_text_password_login.error = "Password is Required."
+            itPasswordLogin.error = "Password is Required."
             return true
         }
         if (mPassword.length < 6) {
-            input_text_password_login.error = "Password Must be >= 6 Characters"
+            itPasswordLogin.error = "Password Must be >= 6 Characters"
             return true
         }
         return false
     }
-
 
     override fun onStart() {
         super.onStart()
@@ -146,18 +127,18 @@ class LoginActivity : AppCompatActivity() {
         updateUI(currentUser)
     }
 
-    private fun gotoProfile() {
+    private fun gotoMain() {
         val intent = Intent(applicationContext, MainActivity::class.java)
         startActivity(intent)
         finish()
     }
 
     private fun gotoProfileSignIn(user: FirebaseUser?) {
-        var nome = "${user?.displayName}"
-        var nick = ""
-        var email = "${user?.email}"
-        var url = "${user?.photoUrl}"
-        var bio = ""
+        val nome = "${user?.displayName}"
+        val nick = ""
+        val email = "${user?.email}"
+        val url = "${user?.photoUrl}"
+        val bio = ""
 
         val data = hashMapOf<String, Any>(
             "name" to nome,
@@ -172,31 +153,26 @@ class LoginActivity : AppCompatActivity() {
             .collection("users")
             .whereEqualTo("email", email)
             .get()
-            .addOnSuccessListener {
-                if(it.documents.isEmpty()){
+            .addOnSuccessListener { success ->
+                if(success.documents.isEmpty()){
                     FirebaseFirestore
                         .getInstance()
                         .collection("users")
                         .document(user?.uid.toString())
                         .set(data)
                         .addOnSuccessListener {
-                            val intent = Intent(applicationContext, MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        }.addOnFailureListener {
-                            Log.w("REGISTER","Error ! " + Objects.requireNonNull(it.message))
-                            snack(itView, "Error ! " + Objects.requireNonNull(it.message)+"")
+                            gotoMain()
+                        }.addOnFailureListener { error ->
+                            snack(itView, "Error ! " + Objects.requireNonNull(error.message)+"")
                         }
                 } else {
-                    val intent = Intent(applicationContext, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                    gotoMain()
                 }
                 changedUiLogin(false)
             }
     }
 
-    private fun aplicarLinearGradiente(linearLayout: ConstraintLayout) {
+    private fun toApplyLinearGradiente(linearLayout: ConstraintLayout) {
         val gradientDrawable = GradientDrawable(
             GradientDrawable.Orientation.TOP_BOTTOM,
             intArrayOf(
@@ -213,7 +189,7 @@ class LoginActivity : AppCompatActivity() {
     private fun updateUI(currentUser: FirebaseUser?) {
         if(currentUser != null){
             Log.i("LOGIN", currentUser.getEmail().toString());
-            gotoProfile();
+            gotoMain();
         }
     }
 
