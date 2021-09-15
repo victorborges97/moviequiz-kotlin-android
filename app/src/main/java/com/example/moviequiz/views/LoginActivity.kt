@@ -10,7 +10,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.moviequiz.R
-import com.example.moviequiz.Uteis.Uteis.snack
+import com.example.moviequiz.Uteis.Uteis
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -87,7 +87,7 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 changedUiLogin(false)
                 // Error return to user
-                snack(itView, "Não foi possível realizar o login"+ (task.exception?.message) +"")
+                Uteis.snack(itView, "Não foi possível realizar o login"+ (task.exception?.message) +"")
             }
         }
     }
@@ -163,7 +163,7 @@ class LoginActivity : AppCompatActivity() {
                         .addOnSuccessListener {
                             gotoMain()
                         }.addOnFailureListener { error ->
-                            snack(itView, "Error ! " + Objects.requireNonNull(error.message)+"")
+                            Uteis.snack(itView, "Error ! " + Objects.requireNonNull(error.message)+"")
                         }
                 } else {
                     gotoMain()
@@ -206,7 +206,7 @@ class LoginActivity : AppCompatActivity() {
                 gotoProfileSignIn(user)
 
             } else {
-                snack(itView, "Algo deu errado no login"+ (task.exception?.message) +"")
+                Uteis.snack(itView, "Algo deu errado no login"+ (task.exception?.message) +"")
             }
         }
     }

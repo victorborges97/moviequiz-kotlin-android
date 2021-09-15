@@ -31,4 +31,12 @@ class FirebaseRepository {
         return googleSignClient
     }
 
+    fun getLists(): Query {
+        db = FirebaseFirestore.getInstance()
+
+        return db
+            .collection("posts")
+            .orderBy("create_at", Query.Direction.ASCENDING)
+    }
+
 }

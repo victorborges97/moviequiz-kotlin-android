@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,39 +8,44 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:layout_width="match_parent">
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cv_image_user"
             android:layout_width="130dp"
             android:layout_height="130dp"
-
+            android:layout_marginStart="20dp"
             android:layout_marginTop="40dp"
-            android:elevation="12dp"
             android:innerRadius="0dp"
             android:shape="ring"
             android:thicknessRatio="1.9"
-            android:layout_marginStart="20dp"
             app:cardBackgroundColor="#5A5A5A"
             app:cardCornerRadius="65dp"
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="3dp"
-                android:innerRadius="0dp"
-                android:shape="ring"
-                android:thicknessRatio="1.9"
-                app:cardBackgroundColor="#5A5A5A"
-                app:cardCornerRadius="65dp">
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_image_user_current"
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
-                    tools:srcCompat="@tools:sample/avatars" />
-            </com.google.android.material.card.MaterialCardView>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:layout_margin="3dp"
+            android:innerRadius="0dp"
+            android:shape="ring"
+            android:thicknessRatio="1.5"
+            app:cardBackgroundColor="#5A5A5A"
+            android:elevation="2dp"
+            app:cardCornerRadius="65dp"
+            app:layout_constraintBottom_toBottomOf="@+id/cv_image_user"
+            app:layout_constraintEnd_toEndOf="@+id/cv_image_user"
+            app:layout_constraintStart_toStartOf="@+id/cv_image_user"
+            app:layout_constraintTop_toTopOf="@+id/cv_image_user">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_image_user_current"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:src="@drawable/ic_user" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.textview.MaterialTextView

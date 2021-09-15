@@ -38,7 +38,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="@string/Email"
+
             android:textColorHint="@color/appPrimary"
+            app:hintTextColor="@color/appPrimary"
+
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
             app:layout_constraintBottom_toTopOf="@+id/container_password"
@@ -52,6 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
+                android:textColor="@color/appPrimary"
                 android:importantForAutofill="no"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -64,6 +68,7 @@
             android:layout_marginTop="8dp"
             android:hint="@string/senha"
             android:textColorHint="@color/appPrimary"
+            app:hintTextColor="@color/appPrimary"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
             app:endIconMode="password_toggle"
