@@ -4,13 +4,19 @@
 
     <item
         android:id="@+id/feed"
+        android:icon="@drawable/feed_bottom"
         android:title="Feed"
         android:contentDescription="Feed"
-        app:showAsAction="ifRoom"
+        app:showAsAction="never"
         />
 
     <item
+        android:id="@+id/placeholder"
+        android:title="" />
+
+    <item
         android:id="@+id/perfil"
+        android:icon="@drawable/account_bottom"
         android:title="Perfil"
         android:contentDescription="Perfil"
         app:showAsAction="never"

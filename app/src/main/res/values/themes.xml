@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.MovieQuiz" parent="Theme.MaterialComponents.Light">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -11,19 +11,19 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/textColoPadrao</item>
         <!-- Customize your theme here. -->
-        <item name="android:textColorPrimary">@color/black</item>
-        <item name="colorButtonNormal">@color/black</item>
+        <item name="android:textColorPrimary">@color/textColoPadrao</item>
+        <item name="colorButtonNormal">@color/textColoPadrao</item>
     </style>
 
     <style name="navTextInactive">
         <item name="android:textSize">11sp</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/textColoPadrao</item>
     </style>
 
     <style name="navTextActive">
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/purple_200</item>
+        <item name="android:textColor">@color/textColoPadrao</item>
     </style>
 </resources>

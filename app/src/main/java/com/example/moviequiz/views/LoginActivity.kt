@@ -148,6 +148,7 @@ class LoginActivity : AppCompatActivity() {
             "url" to url,
             "create_at" to FieldValue.serverTimestamp(),
         )
+
         FirebaseFirestore
             .getInstance()
             .collection("users")
@@ -166,7 +167,27 @@ class LoginActivity : AppCompatActivity() {
                             Uteis.snack(itView, "Error ! " + Objects.requireNonNull(error.message)+"")
                         }
                 } else {
-                    gotoMain()
+                    if(success.documents[0].id == user?.uid){
+                        gotoMain()
+                    } else {
+                        FirebaseFirestore
+                            .getInstance()
+                            .collection("users")
+                            .document(user?.uid.toString())
+                            .set(data)
+                            .addOnSuccessListener {
+                                FirebaseFirestore
+                                    .getInstance()
+                                    .collection("users")
+                                    .document(success.documents[0].id)
+                                    .delete()
+
+                                gotoMain()
+                            }.addOnFailureListener { error ->
+                                Uteis.snack(itView, "Error ! " + Objects.requireNonNull(error.message)+"")
+                            }
+                    }
+
                 }
                 changedUiLogin(false)
             }

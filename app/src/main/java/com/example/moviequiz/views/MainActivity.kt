@@ -1,9 +1,7 @@
 package com.example.moviequiz.views
 
 import android.content.Intent
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -19,6 +17,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.fragment_perfil.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
@@ -31,11 +30,11 @@ class MainActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {it ->
         when(it.itemId) {
             R.id.feed -> {
-                mudarFragment("Feed", FeedFragment())
+                mudarFragment("Feed", false, FeedFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.perfil -> {
-                mudarFragment("Perfil", PerfilFragment())
+                mudarFragment("Perfil", true, PerfilFragment())
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -66,17 +65,31 @@ class MainActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
         googleSignClient = firestoreRepository.requestSignInOptions(this)
-        mudarFragment("Feed", FeedFragment())
+        mudarFragment("Feed", false, FeedFragment())
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
-        bottomNavigation.background = ColorDrawable(resources.getColor(R.color.appPrimary))
+//        bottomNavigation.background = ColorDrawable(resources.getColor(R.color.appPrimary))
+        bottomNavigation.background = null;
+        bottomNavigation.menu.getItem(1).isEnabled = false
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
     }
 
-    private fun mudarFragment(title: String, frag: Fragment) {
-        supportActionBar?.title = title
+    private fun mudarFragment(title: String, isTitle: Boolean = true, frag: Fragment) {
+        if(isTitle){
+            supportActionBar?.title = title
+            setLogo(isTitle)
+        } else {
+            setLogo(isTitle)
+            supportActionBar?.title = null;
+        }
         changeFragment(frag)
+    }
+
+    private fun setLogo(isTitle: Boolean) {
+        this.supportActionBar?.setLogo(R.drawable.logo)
+        this.supportActionBar?.setDisplayUseLogoEnabled(!isTitle)
+        this.supportActionBar?.setDisplayShowHomeEnabled(!isTitle)
     }
 
     private fun changeFragment(targetFragment: Fragment) {

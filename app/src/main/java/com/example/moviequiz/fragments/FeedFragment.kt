@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import com.google.firebase.firestore.DocumentChange
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviequiz.R
@@ -14,6 +15,7 @@ import com.example.moviequiz.Uteis.Uteis
 import com.example.moviequiz.adapters.FeedAdapter
 import com.example.moviequiz.models.Post
 import com.example.moviequiz.repository.FirebaseRepository
+import com.example.moviequiz.views.MainActivity
 import kotlinx.android.synthetic.main.fragment_feed.*
 import kotlinx.android.synthetic.main.fragment_feed.view.*
 
@@ -64,6 +66,7 @@ class FeedFragment : Fragment() {
                 }
 
                 val recyclerViewState = rootView.rvFeedFragment.layoutManager?.onSaveInstanceState()
+
                 for (dc in snapshot!!.documentChanges) {
                     when (dc.type) {
                         DocumentChange.Type.ADDED -> {
@@ -108,6 +111,9 @@ class FeedFragment : Fragment() {
 
     private fun posGetLists() {
         //Mandando a Lista Mutavel para o Adapter
+        newList.add(0, Post())
+        newList.add(0, Post())
+        newList.add(0, Post())
         rootView.rvFeedFragment.adapter = context?.let { FeedAdapter(newList, it) }
     }
 
