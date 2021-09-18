@@ -32,16 +32,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:layout_marginTop="20dp"
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/imageView"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            app:layout_constraintBottom_toTopOf="@+id/etNome"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titulo_register" />
-
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:layout_marginTop="20dp"
+            android:padding="5dp"
+            android:src="@drawable/ic_galery"
+            app:civ_border_width="4dp"
+            app:civ_border_color="#5A5A5A"
+            app:civ_circle_background_color="@color/white"
+            app:layout_constraintEnd_toEndOf="@+id/titulo_register"
+            app:layout_constraintStart_toStartOf="@+id/titulo_register"
+            app:layout_constraintTop_toBottomOf="@+id/titulo_register"/>
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etNome"

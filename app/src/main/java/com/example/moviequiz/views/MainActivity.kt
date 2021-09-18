@@ -2,6 +2,7 @@ package com.example.moviequiz.views
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -10,13 +11,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.moviequiz.fragments.PerfilFragment
 import com.example.moviequiz.R
+import com.example.moviequiz.Uteis.Uteis
 import com.example.moviequiz.fragments.FeedFragment
+import com.example.moviequiz.models.MovieChoice
+import com.example.moviequiz.models.Post
 import com.example.moviequiz.models.User
 import com.example.moviequiz.repository.FirebaseRepository
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.bottom_navigation_coordinator.*
 import kotlinx.android.synthetic.main.fragment_perfil.*
 
 class MainActivity : AppCompatActivity() {
@@ -63,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         firestoreRepository = FirebaseRepository()
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
+        getUser()
 
         googleSignClient = firestoreRepository.requestSignInOptions(this)
         mudarFragment("Feed", false, FeedFragment())
@@ -73,6 +80,30 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation.menu.getItem(1).isEnabled = false
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
+        fabCoord.setOnClickListener {
+            addPostMain()
+        }
+
+    }
+
+    private fun addPostMain() {
+        val filme = MovieChoice(Uteis.generatedUid(), "American Pie 3", "https://i.pinimg.com/originals/d4/cc/2c/d4cc2c193ad2ee0b6b9b37e47fb84e7d.jpg")
+        val filme2 = MovieChoice(Uteis.generatedUid(), "American Pie 2", "https://i.pinimg.com/originals/d4/cc/2c/d4cc2c193ad2ee0b6b9b37e47fb84e7d.jpg")
+        val filme3 = MovieChoice(Uteis.generatedUid(), "American Pie 1", "https://i.pinimg.com/originals/d4/cc/2c/d4cc2c193ad2ee0b6b9b37e47fb84e7d.jpg")
+
+        //Mandando a Lista Mutavel para o Adapter
+        val post1 = Post(
+            "",
+            "Testando Para mostrar",
+            user.name,
+            user.url,
+            user.idUser,
+            listOf(filme, filme2, filme3),
+            listOf(),
+            Timestamp.now(),
+            listOf(),
+        )
+        firestoreRepository.addPost(post1)
     }
 
     private fun mudarFragment(title: String, isTitle: Boolean = true, frag: Fragment) {
@@ -106,6 +137,28 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, LoginActivity::class.java)
             startActivity(intent)
             finish()
+        }
+    }
+
+    fun getUser() {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if(currentUser != null) {
+            try {
+                db.collection("users")
+                    .document(currentUser.uid)
+                    .get()
+                    .addOnSuccessListener {
+                        val userObject = it.toObject(User::class.java)
+                        userObject?.idUser = it.id
+                        Log.d("PERFIL", userObject.toString());
+                        if (userObject != null) {
+                            user = userObject
+                            Log.d("PERFIL", user.name);
+                        }
+                    }
+            } catch (e: Exception) {
+                Log.e("ERROR PERFIL", "${e.message}");
+            }
         }
     }
 

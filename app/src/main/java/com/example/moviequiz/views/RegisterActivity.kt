@@ -16,7 +16,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
 
@@ -39,57 +38,60 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         bRegister.setOnClickListener { viewBtnRegister ->
-            val tNome = etNome.text.toString().trim()
-            val tNick = etNick.text.toString().trim()
-            val tEmail = etEmail.text.toString().trim()
-            val tPassword = etSenha.text.toString().trim()
-            val tCPassword = etConfirm.text.toString().trim()
-
-            val data = hashMapOf(
-                "name" to tNome,
-                "nick" to tNick,
-                "email" to tEmail,
-                "bio" to "",
-                "url" to "",
-                "create_at" to FieldValue.serverTimestamp(),
-            )
-
-            if (confirmTextInput(tEmail, tPassword, tCPassword, tNome, tNick)) return@setOnClickListener
-
-            progressBarRegister.visibility = View.VISIBLE
-
-            mAuth.createUserWithEmailAndPassword(tEmail, tPassword).addOnCompleteListener{ task ->
-                if (task.isSuccessful) {
-
-                    saveImageUser(task.result.user?.uid.toString())
-
-//                    FirebaseFirestore
-//                        .getInstance()
-//                        .collection("users")
-//                        .document(task.result.user?.uid.toString())
-//                        .set(data)
-//                        .addOnSuccessListener {
-//
-//                            gotoLogin()
-//                        }.addOnFailureListener { errorSaveUser ->
-//                            progressBarRegister.visibility = View.INVISIBLE
-//                            Uteis.snack(
-//                                viewBtnRegister,
-//                                "Error ! " + Objects.requireNonNull(errorSaveUser.message) + ""
-//                            )
-//                        }
-
-                } else {
-                    progressBarRegister.visibility = View.INVISIBLE
-                    Uteis.snack(
-                        viewBtnRegister,
-                        "Error ! " + Objects.requireNonNull(task.exception?.message) + ""
-                    )
-                }
-            }
-
+            startRegisterFirebaseEmailPassword(viewBtnRegister)
         }
 
+    }
+
+    private fun startRegisterFirebaseEmailPassword(viewBtnRegister: View) {
+        val tNome = etNome.text.toString().trim()
+        val tNick = etNick.text.toString().trim()
+        val tEmail = etEmail.text.toString().trim()
+        val tPassword = etSenha.text.toString().trim()
+        val tCPassword = etConfirm.text.toString().trim()
+
+        val data = hashMapOf(
+            "name" to tNome,
+            "nick" to tNick,
+            "email" to tEmail,
+            "bio" to "",
+            "url" to "",
+            "create_at" to FieldValue.serverTimestamp(),
+        )
+
+        if (confirmTextInput(tEmail, tPassword, tCPassword, tNome, tNick)) return
+
+        progressBarRegister.visibility = View.VISIBLE
+
+        mAuth.createUserWithEmailAndPassword(tEmail, tPassword).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+
+                saveImageUser(task.result.user?.uid.toString())
+
+    //                    FirebaseFirestore
+    //                        .getInstance()
+    //                        .collection("users")
+    //                        .document(task.result.user?.uid.toString())
+    //                        .set(data)
+    //                        .addOnSuccessListener {
+    //
+    //                            gotoLogin()
+    //                        }.addOnFailureListener { errorSaveUser ->
+    //                            progressBarRegister.visibility = View.INVISIBLE
+    //                            Uteis.snack(
+    //                                viewBtnRegister,
+    //                                "Error ! " + Objects.requireNonNull(errorSaveUser.message) + ""
+    //                            )
+    //                        }
+
+            } else {
+                progressBarRegister.visibility = View.INVISIBLE
+                Uteis.snack(
+                    viewBtnRegister,
+                    "Error ! " + Objects.requireNonNull(task.exception?.message) + ""
+                )
+            }
+        }
     }
 
     private fun getImageGalery() {
@@ -202,6 +204,7 @@ class RegisterActivity : AppCompatActivity() {
             photoUri = data?.data
             Log.i("GETIMAGE", "photoUri $photoUri")
             imageView.setImageURI(photoUri)
+//            Picasso.get().load(photoUri).centerCrop().into(imageView)
         } else {
             Toast.makeText(this, "Image picker action canceled", Toast.LENGTH_SHORT).show()
         }

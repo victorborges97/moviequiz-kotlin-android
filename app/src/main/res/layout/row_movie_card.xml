@@ -5,8 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#F4F4F4"
-    app:cardCornerRadius="25dp"
+    app:cardCornerRadius="100dp"
+
     android:layout_margin="10dp"
+    android:elevation="5dp"
     android:id="@+id/row_post_movie"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"

@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import com.example.moviequiz.R
+import com.example.moviequiz.models.Post
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -37,6 +38,29 @@ class FirebaseRepository {
         return db
             .collection("posts")
             .orderBy("create_at", Query.Direction.ASCENDING)
+    }
+
+    fun deletePost(id: String) {
+        db = FirebaseFirestore.getInstance()
+
+        db.collection("posts")
+            .document(id)
+            .delete()
+    }
+
+    fun addPost(post: Post) {
+        db = FirebaseFirestore.getInstance()
+
+        db.collection("posts")
+            .add(post)
+            .addOnSuccessListener {
+                Log.d("CREATE_FIREBASE", "OnSuccess Created id: ${it.id}")
+                return@addOnSuccessListener
+            }
+            .addOnFailureListener {
+                    e -> Log.w("CREATE_FIREBASE", "OnFailure Update: ", e)
+                return@addOnFailureListener
+            }
     }
 
 }

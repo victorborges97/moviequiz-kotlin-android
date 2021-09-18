@@ -2,11 +2,14 @@ package com.example.moviequiz.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Space
 import android.widget.TextView
+import androidx.core.view.allViews
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviequiz.R
 import com.example.moviequiz.models.MovieChoice
@@ -58,6 +61,7 @@ class FeedAdapter (
                         .into(itemView.ivPhotoUser);
                 }
 
+                itemView.contentSurvey.removeAllViews();
                 setMoviesData(this.movies)
             }
         }
@@ -68,7 +72,7 @@ class FeedAdapter (
                 // Parte dos filmes
                 val view = LayoutInflater.from(this@MainViewHolder.itemView.context)
                     .inflate(R.layout.row_movie_card, null, false);
-
+                
                 val tvRowTitle = view.tvRowTitle
                 val tvWishesotals = view.tvWishesotals
                 val tvPercentage = view.tvPercentage
@@ -82,6 +86,16 @@ class FeedAdapter (
                 Picasso.get().load(it.photo).fit()
                     .centerCrop()
                     .into(ivPhotoMovie);
+
+                val attrs = intArrayOf(R.attr.selectableItemBackground)
+                val typedArray = view.context.obtainStyledAttributes(attrs)
+                val selectableItemBackground = typedArray.getResourceId(0, 0)
+
+                view.isClickable = true
+                view.isFocusable = true
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    view.foreground = view.context.getDrawable(selectableItemBackground)
+                }
 
                 this@MainViewHolder.itemView.contentSurvey.addView(view)
                 val space = Space(view.context)
