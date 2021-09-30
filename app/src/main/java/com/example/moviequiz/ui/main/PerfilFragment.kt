@@ -1,6 +1,5 @@
-package com.example.moviequiz.fragments
+package com.example.moviequiz.ui.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,8 +12,6 @@ import android.widget.TextView
 import com.example.moviequiz.R
 import com.example.moviequiz.models.User
 import com.example.moviequiz.repository.FirebaseRepository
-import com.example.moviequiz.views.LoginActivity
-import com.example.moviequiz.views.MainActivity
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

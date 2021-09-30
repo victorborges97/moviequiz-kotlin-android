@@ -1,22 +1,24 @@
-package com.example.moviequiz.views
+package com.example.moviequiz.ui.main
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.example.moviequiz.fragments.PerfilFragment
 import com.example.moviequiz.R
 import com.example.moviequiz.Uteis.Uteis
-import com.example.moviequiz.fragments.FeedFragment
 import com.example.moviequiz.models.MovieChoice
 import com.example.moviequiz.models.Post
 import com.example.moviequiz.models.User
 import com.example.moviequiz.repository.FirebaseRepository
+import com.example.moviequiz.ui.login.LoginActivity
+import com.example.moviequiz.ui.create.CreatePostActivity
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Timestamp
@@ -46,13 +48,11 @@ class MainActivity : AppCompatActivity() {
         }
         return@OnNavigationItemSelectedListener false
     }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.toolbar_menu, menu)
         return true
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_sair -> {
@@ -80,8 +80,15 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation.menu.getItem(1).isEnabled = false
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
+        val launchActivityCreate = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if(result.resultCode == Activity.RESULT_OK){
+                Log.d("MAIN", "VOLTOU")
+            }
+        }
+
         fabCoord.setOnClickListener {
-            addPostMain()
+            val intent = Intent(applicationContext, CreatePostActivity::class.java)
+            launchActivityCreate.launch(intent)
         }
 
     }

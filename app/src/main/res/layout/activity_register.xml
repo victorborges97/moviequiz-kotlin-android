@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/bg_linear_register"
     android:paddingHorizontal="50dp"
-    tools:context=".views.RegisterActivity">
+    tools:context=".ui.register.RegisterActivity">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

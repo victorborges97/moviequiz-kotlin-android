@@ -1,4 +1,4 @@
-package com.example.moviequiz.views
+package com.example.moviequiz.ui.register
 
 import android.content.Intent
 import android.graphics.Color
@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.moviequiz.R
 import com.example.moviequiz.Uteis.Uteis
+import com.example.moviequiz.ui.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore

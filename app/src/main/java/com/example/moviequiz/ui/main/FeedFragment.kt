@@ -1,4 +1,4 @@
-package com.example.moviequiz.fragments
+package com.example.moviequiz.ui.main
 
 import android.os.Bundle
 import android.util.Log
@@ -10,11 +10,8 @@ import com.google.firebase.firestore.DocumentChange
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviequiz.R
 import com.example.moviequiz.Uteis.Uteis
-import com.example.moviequiz.adapters.FeedAdapter
-import com.example.moviequiz.models.MovieChoice
 import com.example.moviequiz.models.Post
 import com.example.moviequiz.repository.FirebaseRepository
-import com.google.firebase.Timestamp
 import kotlinx.android.synthetic.main.fragment_feed.*
 import kotlinx.android.synthetic.main.fragment_feed.view.*
 
@@ -109,7 +106,6 @@ class FeedFragment : Fragment() {
     }
 
     private fun posGetLists() {
-
         rootView.rvFeedFragment.adapter = context?.let { FeedAdapter(newList, it) }
     }
 

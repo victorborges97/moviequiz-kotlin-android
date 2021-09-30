@@ -1,4 +1,4 @@
-package com.example.moviequiz.views
+package com.example.moviequiz.ui.login
 
 import android.content.Intent
 import android.graphics.Color
@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.moviequiz.R
 import com.example.moviequiz.Uteis.Uteis
+import com.example.moviequiz.ui.main.MainActivity
+import com.example.moviequiz.ui.register.RegisterActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -43,8 +45,6 @@ class LoginActivity : AppCompatActivity() {
             .requestEmail()
             .build()
         googleSignClient = GoogleSignIn.getClient(this, gso)
-
-        toApplyLinearGradiente(bgLinearLoginConstraint)
 
         bGoogle.setOnClickListener {
             changedUiLogin(true)

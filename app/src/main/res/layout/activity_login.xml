@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:id="@+id/bgLinearLoginConstraint"
     android:paddingHorizontal="50dp"
-    tools:context=".views.LoginActivity">
+    android:background="@color/colorPrimary"
+    tools:context=".ui.login.LoginActivity">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
