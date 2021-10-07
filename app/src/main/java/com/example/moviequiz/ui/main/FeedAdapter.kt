@@ -2,6 +2,7 @@ package com.example.moviequiz.ui.main
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moviequiz.R
 import com.example.moviequiz.models.MovieChoice
 import com.example.moviequiz.models.Post
+import com.example.moviequiz.repository.FirebaseRepository
 import com.google.firebase.Timestamp
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.card_post.view.*
 import kotlinx.android.synthetic.main.row_movie_card.view.*
+import java.lang.Exception
 import java.util.*
 
 class FeedAdapter (
@@ -45,11 +48,11 @@ class FeedAdapter (
 
         fun bind(currentItem: Post, position: Int) {
             with(currentItem){
-                itemView.tvTitleMovie.text = this.title
-                itemView.tvNameUser.text = this.userName
+                itemView.tvTitleMovie.text = "${this.title}"
+                itemView.tvNameUser.text = "${this.userName}"
 
                 if(this.userPhoto != ""){
-                    Picasso.get().load(this.userPhoto).fit()
+                    Picasso.get().load("${this.userPhoto}").fit()
                         .centerCrop()
                         .into(itemView.ivPhotoUser);
                 } else {
@@ -59,39 +62,60 @@ class FeedAdapter (
                 }
 
                 itemView.contentSurvey.removeAllViews();
-                setMoviesData(this.movies)
+                setMoviesData(this.movies, this)
             }
         }
 
-        private fun Post.setMoviesData(movies: List<MovieChoice>) {
+        private fun Post.setMoviesData(movies: List<MovieChoice>, post: Post) {
             var count = 0;
             movies.map {
                 // Parte dos filmes
                 val view = LayoutInflater.from(this@MainViewHolder.itemView.context)
                     .inflate(R.layout.row_movie_card, null, false);
-                
-                val tvRowTitle = view.tvRowTitle
-                val tvWishesotals = view.tvWishesotals
-                val tvPercentage = view.tvPercentage
-                val ivPhotoMovie = view.ivPhotoMovie
 
-                view.tvRowCountMovie.text = getLetra(count)
-                tvRowTitle.text = it.title
-                tvWishesotals.text = "0 Votos -"
-                tvPercentage.text = "0%"
+                val uid = FirebaseRepository().user?.uid
+                val filme: MovieChoice = it;
 
-                Picasso.get().load(it.photo).fit()
-                    .centerCrop()
-                    .into(ivPhotoMovie);
+                if(uid != post.userId){
+                    view.setOnClickListener {
+                        post.votar(post, filme)
+                    }
+                }
+                val isVoto = post.wishes.filter { wishe ->
+                    wishe.idMovie == filme.idMovie
+                }
 
-                val attrs = intArrayOf(R.attr.selectableItemBackground)
-                val typedArray = view.context.obtainStyledAttributes(attrs)
-                val selectableItemBackground = typedArray.getResourceId(0, 0)
+                Log.i("TESTE", "${isVoto.toString()}")
 
-                view.isClickable = true
-                view.isFocusable = true
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    view.foreground = view.context.getDrawable(selectableItemBackground)
+                var quantVotos: Int = 0
+
+                if(isVoto.isNotEmpty()) {
+                    quantVotos = isVoto.size
+                }
+
+                view.tvRowCountMovie.text = "${getLetra(count)}"
+                view.tvRowTitle.text = "${it.title}"
+                view.tvWishesotals.text = "${quantVotos} Votos -"
+                view.tvPercentage.text = "0%"
+
+                try {
+                    Picasso.get().load(it.photo).fit()
+                        .centerCrop()
+                        .into(view.ivPhotoMovie);
+                } catch (e: Exception) {
+                    Log.d("ERROR", "ERROR CARREGAR FOTO ${e.message}")
+                }
+
+                if(uid != post.userId) {
+                    val attrs = intArrayOf(R.attr.selectableItemBackground)
+                    val typedArray = view.context.obtainStyledAttributes(attrs)
+                    val selectableItemBackground = typedArray.getResourceId(0, 0)
+
+                    view.isClickable = true
+                    view.isFocusable = true
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        view.foreground = view.context.getDrawable(selectableItemBackground)
+                    }
                 }
 
                 this@MainViewHolder.itemView.contentSurvey.addView(view)
@@ -101,7 +125,6 @@ class FeedAdapter (
                 count += 1
             }
         }
-
     }
 
     private fun getLetra(count: Int): String {

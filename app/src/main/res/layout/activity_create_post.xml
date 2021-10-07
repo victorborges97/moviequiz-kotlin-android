@@ -29,15 +29,17 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tvTitleMovie"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/ruda"
+            android:textAlignment="center"
             android:textSize="18sp"
+            android:singleLine="true"
+            android:ellipsize="end"
             app:layout_constraintBottom_toBottomOf="@+id/viewTop"
             app:layout_constraintEnd_toEndOf="@+id/viewTop"
             app:layout_constraintStart_toStartOf="@+id/viewTop"
-            app:layout_constraintTop_toTopOf="@+id/viewTop"
-            tools:text="QUAL FILME DEVO ASSISTIR GALERA ?" />
+            app:layout_constraintTop_toTopOf="@+id/viewTop" />
 
         <LinearLayout
             android:id="@+id/contentSurvey"

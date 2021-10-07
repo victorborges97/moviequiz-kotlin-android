@@ -1,5 +1,6 @@
 package com.example.moviequiz.models
 
+import android.util.Log
 import com.example.moviequiz.repository.FirebaseRepository
 import com.google.firebase.Timestamp
 
@@ -10,9 +11,8 @@ data class Post(
     var userPhoto: String = "",
     var userId: String = "",
     var movies: List<MovieChoice> = listOf(),
-    var wishes: List<Map<String, String>> = listOf(),
+    var wishes: List<Wishes> = listOf(),
     var create_at: Timestamp? = Timestamp.now(),
-    var usersChecked: List<String> = listOf(),
 ) {
 
     fun deletePost() {
@@ -30,8 +30,36 @@ data class Post(
             "movies" to this.movies,
             "wishes" to this.wishes,
             "create_at" to this.create_at,
-            "usersChecked" to this.usersChecked,
         )
     }
+
+    fun votar(post: Post, movie: MovieChoice) {
+        val uid = FirebaseRepository().user?.uid
+        if(uid != null && uid != ""){
+            Log.i("POST", "ID: $uid")
+            Log.i("POST", "POST CLASS: $idPost")
+            Log.i("POST", "POST: ${post.toString()}")
+
+            if(uid == userId) {
+                return
+            }
+
+            val isExist = wishes.find {
+                it.userId == uid
+            }
+            Log.i("POST", "isExist: ${isExist.toString()}")
+            if(isExist != null) {
+                return
+            }
+
+            FirebaseRepository().votarPost(post.idPost, Wishes(idMovie = movie.idMovie, userId = uid))
+
+        }
+    }
+
+    override fun toString(): String {
+        return "\nPost(idPost='$idPost', title='$title', userName='$userName', userId='$userId', wishes=$wishes)"
+    }
+
 
 }

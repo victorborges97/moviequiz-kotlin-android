@@ -108,7 +108,6 @@ class MainActivity : AppCompatActivity() {
             listOf(filme, filme2, filme3),
             listOf(),
             Timestamp.now(),
-            listOf(),
         )
         firestoreRepository.addPost(post1)
     }

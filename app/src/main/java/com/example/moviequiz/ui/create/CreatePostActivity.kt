@@ -2,6 +2,8 @@ package com.example.moviequiz.ui.create
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.drawable.Drawable
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -30,6 +32,29 @@ class CreatePostActivity : AppCompatActivity() {
     private lateinit var user: User;
     private val TAG = "CREATEPOST"
 
+    val launchActivitySearch = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if(result.resultCode == Activity.RESULT_OK){
+            val data: Intent? = result.data
+
+            val moviesSearch = data?.getParcelableArrayListExtra<MovieIMDB>("filmes")
+
+            if (moviesSearch != null && moviesSearch.size >= 1) {
+                listMoviesEscolhida.add(moviesSearch.first())
+                setAdapterRv()
+                Log.d("RESULT", "TAMANHO: ${moviesSearch.size} - ${moviesSearch[0]?.title}")
+                if(listMoviesEscolhida.size == 3) {
+                    val new: Drawable? = getDrawable(R.drawable.ic_baseline_save_24)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        fabAddMovie.foreground = new
+                    }
+                }
+            } else {
+                Log.d("RESULT ERROR", "TAMANHO: ${moviesSearch?.size}")
+            }
+
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
@@ -40,51 +65,70 @@ class CreatePostActivity : AppCompatActivity() {
         rvCreatePost.layoutManager = LinearLayoutManager(this)
         rvCreatePost.setHasFixedSize(true)
 
-        val launchActivitySearch = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if(result.resultCode == Activity.RESULT_OK){
-                val data: Intent? = result.data
-
-                val moviesSearch = data?.getParcelableArrayListExtra<MovieIMDB>("filmes")
-
-                if (moviesSearch != null && moviesSearch.size >= 1) {
-                    listMoviesEscolhida.add(moviesSearch.first())
-                    setAdapterRv()
-                    Log.d("RESULT", "TAMANHO: ${moviesSearch.size} - ${moviesSearch[0]?.title}")
-                } else {
-                    Log.d("RESULT ERROR", "TAMANHO: ${moviesSearch?.size}")
-                }
-
+        fabAddMovie.setOnClickListener {
+            if(listMoviesEscolhida.size < 3) {
+                addMovie();
+            } else {
+                savePost()
             }
         }
 
-        fabAddMovie.setOnClickListener {
-            val intent = Intent(this, SearchMovieActivity::class.java)
-            launchActivitySearch.launch( intent )
-        }
+    }
 
+    private fun addMovie() {
+        val intent = Intent(this, SearchMovieActivity::class.java)
+        launchActivitySearch.launch( intent )
+    }
+
+    private fun savePost() {
+        addPost()
+        finish()
     }
 
     private fun addPost() {
         // TODO: IMPLEMENTAR ADD DE POST!
         var listMovies: List<MovieChoice> = listOf<MovieChoice>()
+        val titulo = tvTitleMovie.text.toString().trim()
 
-        val filme = MovieChoice(Uteis.generatedUid(), "American Pie 3", "https://i.pinimg.com/originals/d4/cc/2c/d4cc2c193ad2ee0b6b9b37e47fb84e7d.jpg")
-        val filme2 = MovieChoice(Uteis.generatedUid(), "American Pie 2", "https://i.pinimg.com/originals/d4/cc/2c/d4cc2c193ad2ee0b6b9b37e47fb84e7d.jpg")
-        val filme3 = MovieChoice(Uteis.generatedUid(), "American Pie 1", "https://i.pinimg.com/originals/d4/cc/2c/d4cc2c193ad2ee0b6b9b37e47fb84e7d.jpg")
+        if(listMoviesEscolhida.size >= 3){
 
-        //Mandando a Lista Mutavel para o Adapter
-        val post1 = Post(
-            "",
-            "Testando Para mostrar",
-            user.name,
-            user.url,
-            user.idUser,
-            listOf(filme, filme2, filme3),
-            listOf(),
-            Timestamp.now(),
-            listOf(),
-        )
-//        firestoreRepository.addPost(post1)
+            val filme = listMoviesEscolhida[0].image?.url?.let {
+                MovieChoice(
+                    Uteis.generatedUid(),
+                    listMoviesEscolhida[0].title,
+                    it,
+                )
+            }
+            val filme2 = listMoviesEscolhida[1].image?.url?.let {
+                MovieChoice(
+                    Uteis.generatedUid(),
+                    listMoviesEscolhida[1].title,
+                    it,
+                )
+            }
+            val filme3 = listMoviesEscolhida[2].image?.url?.let {
+                MovieChoice(
+                    Uteis.generatedUid(),
+                    listMoviesEscolhida[2].title,
+                    it,
+                )
+            }
+
+            //Mandando a Lista Mutavel para o Adapter
+            val post1 = Post(
+                "",
+                titulo,
+                user.name,
+                user.url,
+                user.idUser,
+                listOf(filme, filme2, filme3) as List<MovieChoice>,
+                listOf(),
+                Timestamp.now(),
+            )
+
+            firestoreRepository.addPost(post1)
+
+        }
     }
 
     private fun setAdapterRv() {

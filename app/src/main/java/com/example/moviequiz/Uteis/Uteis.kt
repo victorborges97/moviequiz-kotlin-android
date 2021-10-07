@@ -6,9 +6,12 @@ import android.graphics.drawable.ColorDrawable
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.util.rangeTo
 import com.example.moviequiz.R
 import com.example.moviequiz.models.Post
 import com.google.android.material.snackbar.Snackbar
+import java.lang.Exception
+import java.nio.charset.Charset
 import java.text.NumberFormat
 import java.util.*
 
@@ -22,10 +25,97 @@ class Uteis {
             }
         }
 
-        fun generatedUid(): String {
-            val uuid = UUID.randomUUID()
-            return uuid.toString();
+        fun next(): String {
+            return UUID.randomUUID().toString().replace("-", "").uppercase(Locale.getDefault());
         }
+
+        fun generatedUid(): String {
+            val u = UUID.randomUUID()
+            return toIDString(u.mostSignificantBits) + toIDString(u.leastSignificantBits)
+        }
+
+        private fun toIDString(i: Long): String {
+            var i = i
+            val buf = CharArray(32)
+            val z = 64 // 1 << 6;
+            var cp = 32
+            val b = (z - 1).toLong()
+            do {
+                buf[--cp] = DIGITS66[(i and b).toInt()]
+                i = i ushr 6
+            } while (i != 0L)
+            return String(buf, cp, 32 - cp)
+        }
+
+        // array de 64+2 digitos
+        private val DIGITS66 = charArrayOf(
+            '0',
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9',
+            'a',
+            'b',
+            'c',
+            'd',
+            'e',
+            'f',
+            'g',
+            'h',
+            'i',
+            'j',
+            'k',
+            'l',
+            'm',
+            'n',
+            'o',
+            'p',
+            'q',
+            'r',
+            's',
+            't',
+            'u',
+            'v',
+            'w',
+            'x',
+            'y',
+            'z',
+            'A',
+            'B',
+            'C',
+            'D',
+            'E',
+            'F',
+            'G',
+            'H',
+            'I',
+            'J',
+            'K',
+            'L',
+            'M',
+            'N',
+            'O',
+            'P',
+            'Q',
+            'R',
+            'S',
+            'T',
+            'U',
+            'V',
+            'W',
+            'X',
+            'Y',
+            'Z',
+            '-',
+            '.',
+            '_',
+            '~'
+        )
 
         fun alert(
             context: Context,
