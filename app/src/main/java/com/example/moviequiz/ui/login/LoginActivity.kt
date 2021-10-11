@@ -1,22 +1,19 @@
 package com.example.moviequiz.ui.login
 
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.moviequiz.R
 import com.example.moviequiz.Uteis.Uteis
+import com.example.moviequiz.repository.FirebaseRepository
 import com.example.moviequiz.ui.main.MainActivity
 import com.example.moviequiz.ui.register.RegisterActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -26,25 +23,25 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_login.*
 import java.util.*
 
-
 class LoginActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
-    var googleSignClient : GoogleSignInClient? = null
-    val RC_SIGN_IN = 1000
+    private var googleSignClient : GoogleSignInClient? = null
+    private lateinit var firestoreRepository: FirebaseRepository
+    private val RC_SIGN_IN = 1000
 
     private lateinit var itView: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        initalComponents()
 
+    }
+
+    private fun initalComponents() {
         mAuth = FirebaseAuth.getInstance()
-
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-        googleSignClient = GoogleSignIn.getClient(this, gso)
+        firestoreRepository = FirebaseRepository()
+        googleSignClient = firestoreRepository.requestSignInOptions(this)
 
         bGoogle.setOnClickListener {
             changedUiLogin(true)
@@ -69,7 +66,6 @@ class LoginActivity : AppCompatActivity() {
             }
             handled
         }
-
     }
 
     private fun loginWithEmail() {
@@ -123,7 +119,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser: FirebaseUser? = mAuth.getCurrentUser()
+        val currentUser: FirebaseUser? = mAuth.currentUser
         updateUI(currentUser)
     }
 
@@ -140,7 +136,7 @@ class LoginActivity : AppCompatActivity() {
         val url = "${user?.photoUrl}"
         val bio = ""
 
-        val data = hashMapOf<String, Any>(
+        val data = hashMapOf(
             "name" to nome,
             "nick" to nick,
             "email" to email,
@@ -167,7 +163,7 @@ class LoginActivity : AppCompatActivity() {
                             Uteis.snack(itView, "Error ! " + Objects.requireNonNull(error.message)+"")
                         }
                 } else {
-                    if(success.documents[0].id == user?.uid){
+                    if(success.documents.first().id == user?.uid){
                         gotoMain()
                     } else {
                         FirebaseFirestore
@@ -193,24 +189,10 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    private fun toApplyLinearGradiente(linearLayout: ConstraintLayout) {
-        val gradientDrawable = GradientDrawable(
-            GradientDrawable.Orientation.TOP_BOTTOM,
-            intArrayOf(
-                Color.parseColor("#FF5A5A"),
-                Color.parseColor("#F58E43")
-            )
-        )
-
-        gradientDrawable.cornerRadius = 0f;
-
-        linearLayout.background = gradientDrawable;
-    }
-
     private fun updateUI(currentUser: FirebaseUser?) {
         if(currentUser != null){
-            Log.i("LOGIN", currentUser.getEmail().toString());
-            gotoMain();
+            Log.i("LOGIN", currentUser.email.toString())
+            gotoMain()
         }
     }
 

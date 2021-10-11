@@ -19,6 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
+import kotlin.collections.HashMap
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
@@ -29,9 +30,11 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        val linearLayout: ConstraintLayout = findViewById(R.id.bg_linear_register)
-        toApplyLinearGradiente(linearLayout)
+        initalComponents()
 
+    }
+
+    private fun initalComponents() {
         mAuth = FirebaseAuth.getInstance()
 
         imageView.setOnClickListener {
@@ -41,7 +44,6 @@ class RegisterActivity : AppCompatActivity() {
         bRegister.setOnClickListener { viewBtnRegister ->
             startRegisterFirebaseEmailPassword(viewBtnRegister)
         }
-
     }
 
     private fun startRegisterFirebaseEmailPassword(viewBtnRegister: View) {
@@ -66,26 +68,9 @@ class RegisterActivity : AppCompatActivity() {
 
         mAuth.createUserWithEmailAndPassword(tEmail, tPassword).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-
-                saveImageUser(task.result.user?.uid.toString())
-
-    //                    FirebaseFirestore
-    //                        .getInstance()
-    //                        .collection("users")
-    //                        .document(task.result.user?.uid.toString())
-    //                        .set(data)
-    //                        .addOnSuccessListener {
-    //
-    //                            gotoLogin()
-    //                        }.addOnFailureListener { errorSaveUser ->
-    //                            progressBarRegister.visibility = View.INVISIBLE
-    //                            Uteis.snack(
-    //                                viewBtnRegister,
-    //                                "Error ! " + Objects.requireNonNull(errorSaveUser.message) + ""
-    //                            )
-    //                        }
-
-            } else {
+                saveImageUser(task.result.user?.uid.toString(), data)
+            }
+            else {
                 progressBarRegister.visibility = View.INVISIBLE
                 Uteis.snack(
                     viewBtnRegister,
@@ -103,7 +88,7 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveImageUser(id: String) {
+    private fun saveImageUser(id: String, data: HashMap<String, Any>) {
         val tNome = etNome.text.toString().trim()
         val tNick = etNick.text.toString().trim()
         val tEmail = etEmail.text.toString().trim()
@@ -131,19 +116,21 @@ class RegisterActivity : AppCompatActivity() {
 
                     if(downloadUrlTask.isSuccessful)
                     {
-                        val data = hashMapOf(
-                            "name" to tNome,
-                            "nick" to tNick,
-                            "email" to tEmail,
-                            "bio" to "",
-                            "url" to downloadUrlTask.result.toString(),
-                            "create_at" to FieldValue.serverTimestamp(),
-                        )
+
+                        data["url"] = downloadUrlTask.result.toString()
+//                        val data = hashMapOf(
+//                            "name" to tNome,
+//                            "nick" to tNick,
+//                            "email" to tEmail,
+//                            "bio" to "",
+//                            "url" to downloadUrlTask.result.toString(),
+//                            "create_at" to FieldValue.serverTimestamp(),
+//                        )
 
                         FirebaseFirestore
                             .getInstance()
                             .collection("users")
-                            .document("$id")
+                            .document(id)
                             .set(data)
                             .addOnSuccessListener {
                                 etNome.text?.clear()
@@ -156,7 +143,7 @@ class RegisterActivity : AppCompatActivity() {
                             }
                             .addOnFailureListener { errorPhoto ->
                                 Log.e("REGISTER", "Expeption during Firebase operations ${errorPhoto.message.toString()}")
-                                Toast.makeText(this, "Failed to save post", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, "Failed to save user", Toast.LENGTH_SHORT).show()
                             }
                     }
                     else
@@ -165,15 +152,16 @@ class RegisterActivity : AppCompatActivity() {
                     }
 
                 }
-        } else {
-            val data = hashMapOf(
-                "name" to tNome,
-                "nick" to tNick,
-                "email" to tEmail,
-                "bio" to "",
-                "url" to "",
-                "create_at" to FieldValue.serverTimestamp(),
-            )
+        }
+        else {
+//            val data = hashMapOf(
+//                "name" to tNome,
+//                "nick" to tNick,
+//                "email" to tEmail,
+//                "bio" to "",
+//                "url" to "",
+//                "create_at" to FieldValue.serverTimestamp(),
+//            )
 
             FirebaseFirestore
                 .getInstance()
@@ -203,9 +191,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == PICK_PHOTO_CODE){
             photoUri = data?.data
-            Log.i("GETIMAGE", "photoUri $photoUri")
             imageView.setImageURI(photoUri)
-//            Picasso.get().load(photoUri).centerCrop().into(imageView)
         } else {
             Toast.makeText(this, "Image picker action canceled", Toast.LENGTH_SHORT).show()
         }
@@ -241,8 +227,8 @@ class RegisterActivity : AppCompatActivity() {
             return true
         }
 
-        if (tPassword.length > 6) {
-            etSenha.error = "Password Must be >= 6 Characters"
+        if (tPassword.length < 5) {
+            etSenha.error = "Password Must be < 5 Characters"
             return true
         }
         if (tPassword != tCPassword) {
@@ -253,17 +239,4 @@ class RegisterActivity : AppCompatActivity() {
         return false
     }
 
-    private fun toApplyLinearGradiente(linearLayout: ConstraintLayout) {
-        val gradientDrawable = GradientDrawable(
-            GradientDrawable.Orientation.TOP_BOTTOM,
-            intArrayOf(
-                Color.parseColor("#FF5A5A"),
-                Color.parseColor("#F58E43")
-            )
-        )
-
-        gradientDrawable.cornerRadius = 0f;
-
-        linearLayout.background = gradientDrawable;
-    }
 }

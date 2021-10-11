@@ -4,129 +4,127 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.PerfilFragment">
+    tools:context=".ui.main.fragments.PerfilFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cvImagePerfilUser"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_marginTop="40dp"
-            android:innerRadius="0dp"
-            android:shape="ring"
-            android:thicknessRatio="1.9"
-            app:cardBackgroundColor="#5A5A5A"
-            app:cardCornerRadius="65dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvImagePerfilUser"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_marginTop="40dp"
+                android:innerRadius="0dp"
+                android:shape="ring"
+                android:thicknessRatio="1.9"
+                app:cardBackgroundColor="#5A5A5A"
+                app:cardCornerRadius="65dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        </com.google.android.material.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_margin="3dp"
+                android:elevation="2dp"
+                android:innerRadius="0dp"
+                android:shape="ring"
+                android:thicknessRatio="1.5"
+                app:cardBackgroundColor="#5A5A5A"
+                app:cardCornerRadius="65dp"
+                app:layout_constraintBottom_toBottomOf="@+id/cvImagePerfilUser"
+                app:layout_constraintEnd_toEndOf="@+id/cvImagePerfilUser"
+                app:layout_constraintStart_toStartOf="@+id/cvImagePerfilUser"
+                app:layout_constraintTop_toTopOf="@+id/cvImagePerfilUser">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/materialCardView"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:layout_margin="3dp"
-            android:elevation="2dp"
-            android:innerRadius="0dp"
-            android:shape="ring"
-            android:thicknessRatio="1.5"
-            app:cardBackgroundColor="#5A5A5A"
-            app:cardCornerRadius="65dp"
-            app:layout_constraintBottom_toBottomOf="@+id/cvImagePerfilUser"
-            app:layout_constraintEnd_toEndOf="@+id/cvImagePerfilUser"
-            app:layout_constraintStart_toStartOf="@+id/cvImagePerfilUser"
-            app:layout_constraintTop_toTopOf="@+id/cvImagePerfilUser">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivPerfilUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:srcCompat="@drawable/ic_user" />
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvNomePerfilUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="50dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_marginTop="16dp"
+                android:textAlignment="center"
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivPerfilUser"
+                android:maxLines="1"
+                android:textColor="#5A5A5A"
+                android:textSize="18sp"
+
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/cvImagePerfilUser"
+                app:layout_constraintStart_toStartOf="@+id/cvImagePerfilUser"
+                app:layout_constraintTop_toBottomOf="@+id/materialCardView"
+                tools:text="Nome" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvEmailPerfilUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="50dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/roboto_bold"
+                android:textAlignment="center"
+
+                android:maxLines="1"
+                android:textColor="#5A5A5A"
+                android:textSize="18sp"
+
+                app:layout_constraintEnd_toEndOf="@+id/tvNomePerfilUser"
+                app:layout_constraintStart_toStartOf="@+id/tvNomePerfilUser"
+                app:layout_constraintTop_toBottomOf="@+id/tvNomePerfilUser"
+                tools:text="email@gmail.com" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvBioPerfilUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginTop="16dp"
+                android:ellipsize="end"
+                android:textAlignment="center"
+
+                android:fontFamily="@font/roboto_bold"
+                android:maxLines="2"
+                android:textColor="#5A5A5A"
+
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvNomePerfilUser"
+                app:layout_constraintStart_toStartOf="@+id/tvNomePerfilUser"
+                app:layout_constraintTop_toBottomOf="@+id/tvEmailPerfilUser"
+                tools:text="Bio dadd dasd dasda dasd dasd dsah dsahdb dsahdb dasbd dasbd hsbad dasb djbas" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mbSair"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:text="Sair"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvBioPerfilUser" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPerfilPostsUser"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:srcCompat="@drawable/ic_launcher_background" />
-        </com.google.android.material.card.MaterialCardView>
+                android:layout_marginTop="16dp"
+                android:overScrollMode="never"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mbSair" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvNomePerfilUser"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/roboto_bold"
-            android:layout_marginTop="16dp"
-            android:textAlignment="center"
-
-            android:maxLines="1"
-            android:textColor="#5A5A5A"
-            android:textSize="18sp"
-
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/cvImagePerfilUser"
-            app:layout_constraintStart_toStartOf="@+id/cvImagePerfilUser"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView"
-            tools:text="Nome" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvEmailPerfilUser"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="50dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/roboto_bold"
-            android:textAlignment="center"
-
-            android:maxLines="1"
-            android:textColor="#5A5A5A"
-            android:textSize="18sp"
-
-            app:layout_constraintEnd_toEndOf="@+id/tvNomePerfilUser"
-            app:layout_constraintStart_toStartOf="@+id/tvNomePerfilUser"
-            app:layout_constraintTop_toBottomOf="@+id/tvNomePerfilUser"
-            tools:text="email@gmail.com" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvBioPerfilUser"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginTop="16dp"
-            android:ellipsize="end"
-            android:textAlignment="center"
-
-            android:fontFamily="@font/roboto_bold"
-            android:maxLines="2"
-            android:textColor="#5A5A5A"
-
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/tvNomePerfilUser"
-            app:layout_constraintStart_toStartOf="@+id/tvNomePerfilUser"
-            app:layout_constraintTop_toBottomOf="@+id/tvEmailPerfilUser"
-            tools:text="Bio dadd dasd dasda dasd dasd dsah dsahdb dsahdb dasbd dasbd hsbad dasb djbas" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/mbSair"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginTop="16dp"
-            android:text="Sair"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvBioPerfilUser" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPerfilPostsUser"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="35dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mbSair" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

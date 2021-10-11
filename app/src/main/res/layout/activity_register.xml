@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/bg_linear_register"
     android:paddingHorizontal="50dp"
+    android:background="@color/colorPrimary"
     tools:context=".ui.register.RegisterActivity">
 
 
@@ -126,16 +127,19 @@
             app:layout_constraintTop_toBottomOf="@+id/etSenha" />
 
         <!--Botão de Login E-mail e Senha-->
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bRegister"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/cadastrar"
-            android:textColor="@color/black"
+            android:layout_height="45dp"
+            android:layout_marginTop="20dp"
+            android:hint="@string/cadastrar"
+            android:textColor="@color/textColoPadrao"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etConfirm" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

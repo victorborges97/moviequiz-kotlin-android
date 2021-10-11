@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/shap_radius_20dp"
+    android:backgroundTint="@color/colorPrimary"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/viewTop"
+        android:layout_width="match_parent"
+        android:layout_height="41dp"
+        android:background="@drawable/shap_radius_20dp_view"
+        android:backgroundTint="#F3F3F3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitleMovie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/ruda"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/viewTop"
+        app:layout_constraintEnd_toEndOf="@+id/viewTop"
+        app:layout_constraintStart_toStartOf="@+id/viewTop"
+        app:layout_constraintTop_toTopOf="@+id/viewTop"
+        tools:text="QUAL FILME DEVO ASSISTIR GALERA ?" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/contentSurvey"
+        android:background="#F3F3F3"
+        android:gravity="center"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewTop"
+        android:orientation="vertical" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivPhotoUser"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="18dp"
+        android:padding="5dp"
+        android:src="@drawable/ic_galery"
+        app:civ_border_color="#5A5A5A"
+        app:civ_border_width="2dp"
+        app:civ_circle_background_color="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contentSurvey"
+        tools:src="@drawable/ic_user" />
+
+    <TextView
+        android:id="@+id/tvNameUser"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:ellipsize="marquee"
+        android:fontFamily="@font/roboto_bold"
+        android:lineHeight="14dp"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivPhotoUser"
+        app:layout_constraintTop_toBottomOf="@+id/contentSurvey"
+        tools:text="João Victor Borges" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

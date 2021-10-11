@@ -1,11 +1,11 @@
 package com.example.moviequiz.ui.search
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import android.view.View
 import android.widget.SearchView.*
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moviequiz.R
@@ -21,17 +21,20 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import kotlin.concurrent.timerTask
 
 class SearchMovieActivity : AppCompatActivity() {
     private var listMoviesSearch: MutableList<MovieIMDB> = mutableListOf()
     private var listMoviesEscolhida: ArrayList<MovieIMDB> = arrayListOf()
     private var textSearch: String = ""
-    private var loading: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_movie)
+        initialComponents()
+    }
+
+    private fun initialComponents() {
+        supportActionBar?.title = "Pesquisar filmes"
 
         rvSearchMovie.apply {
             layoutManager = GridLayoutManager(applicationContext, 2)
@@ -41,7 +44,6 @@ class SearchMovieActivity : AppCompatActivity() {
         svMovie.setOnQueryTextListener(object : OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
-                Log.d("FILME", "$textSearch")
                 getRetrofit(textSearch)
                 return false
             }
@@ -63,8 +65,18 @@ class SearchMovieActivity : AppCompatActivity() {
         }
     }
 
+    private fun changedUiLogin(el: Boolean) {
+        blocksFields(el)
+        progressBarSearch.visibility = if(el) View.VISIBLE else View.INVISIBLE
+    }
+
+    private fun blocksFields(b: Boolean) {
+        svMovie.isEnabled = !b
+    }
+
     private fun getRetrofit(filme: String) {
         listMoviesSearch.clear()
+        changedUiLogin(true)
         val retrofit =  Retrofit.Builder()
             .baseUrl(getString(R.string.url_imdb_rapidapi))
             .addConverterFactory(GsonConverterFactory.create())
@@ -82,7 +94,6 @@ class SearchMovieActivity : AppCompatActivity() {
             call.enqueue(object : Callback<ResponseMovieIMDB> {
                 override fun onResponse(call: Call<ResponseMovieIMDB>, response: Response<ResponseMovieIMDB>) {
                     if (response.code() == 200) {
-                        Log.d("API", "OK")
                         response.body().let {
                             if (it != null) {
                                 it.results.forEach{ filmeResponse ->
@@ -90,8 +101,9 @@ class SearchMovieActivity : AppCompatActivity() {
                                         listMoviesSearch.add(filmeResponse)
                                     }
                                 }
-                                Log.d("API", it.results.toString())
+                                changedUiLogin(false)
                                 setAdapterRv()
+
                             }
                         }
                     }
@@ -108,7 +120,6 @@ class SearchMovieActivity : AppCompatActivity() {
 
     private fun itemOnClickRv(itemDto: MovieIMDB, position: Int) {
         listMoviesEscolhida.add(itemDto)
-        Log.i("CALLBACK", "Clicked on item  ${itemDto.title} at position $position")
         onBackPressed()
     }
 

@@ -16,14 +16,12 @@ import com.example.moviequiz.models.MovieIMDB
 import com.example.moviequiz.models.Post
 import com.example.moviequiz.models.User
 import com.example.moviequiz.repository.FirebaseRepository
-import com.example.moviequiz.ui.search.SearchAdapter
 import com.example.moviequiz.ui.search.SearchMovieActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_create_post.*
-import kotlinx.android.synthetic.main.activity_search_movie.*
 
 class CreatePostActivity : AppCompatActivity() {
     private var listMoviesEscolhida: ArrayList<MovieIMDB> = arrayListOf()
@@ -58,12 +56,14 @@ class CreatePostActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
+        initialComponents()
+    }
+
+    private fun initialComponents() {
+        supportActionBar?.title = "Criar enquete"
         db = FirebaseFirestore.getInstance()
         firestoreRepository = FirebaseRepository()
         getUser()
-
-        rvCreatePost.layoutManager = LinearLayoutManager(this)
-        rvCreatePost.setHasFixedSize(true)
 
         fabAddMovie.setOnClickListener {
             if(listMoviesEscolhida.size < 3) {
@@ -73,6 +73,8 @@ class CreatePostActivity : AppCompatActivity() {
             }
         }
 
+        rvCreatePost.layoutManager = LinearLayoutManager(this)
+        rvCreatePost.setHasFixedSize(true)
     }
 
     private fun addMovie() {
@@ -86,8 +88,6 @@ class CreatePostActivity : AppCompatActivity() {
     }
 
     private fun addPost() {
-        // TODO: IMPLEMENTAR ADD DE POST!
-        var listMovies: List<MovieChoice> = listOf<MovieChoice>()
         val titulo = tvTitleMovie.text.toString().trim()
 
         if(listMoviesEscolhida.size >= 3){
@@ -144,7 +144,7 @@ class CreatePostActivity : AppCompatActivity() {
         }
     }
 
-    fun getUser() {
+    private fun getUser() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         if(currentUser != null) {
             try {

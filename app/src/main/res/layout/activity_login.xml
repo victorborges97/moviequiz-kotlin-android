@@ -40,6 +40,8 @@
             android:layout_marginTop="20dp"
             android:hint="@string/Email"
 
+            android:visibility="gone"
+
             android:textColorHint="@color/appPrimary"
             app:hintTextColor="@color/appPrimary"
 
@@ -68,6 +70,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:hint="@string/senha"
+
+            android:visibility="gone"
+
             android:textColorHint="@color/appPrimary"
             app:hintTextColor="@color/appPrimary"
             app:boxStrokeWidth="0dp"
@@ -96,6 +101,10 @@
             android:layout_height="45dp"
             android:layout_marginTop="20dp"
             android:hint="@string/entrar"
+
+            android:visibility="gone"
+
+            android:textColor="@color/textColoPadrao"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -103,36 +112,39 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvRegister"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:hint="@string/cadastre_se_aqui"
             android:textStyle="bold"
+            android:textColor="@color/textColoPadrao"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bLogin" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/bGoogle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/content_login"
+        app:layout_constraintVertical_bias="0.1" />
 
     <ProgressBar
         android:id="@+id/progressBarLogin"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:progressTint="#FFFFFF"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/content_login" />
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/bGoogle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBarLogin"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintTop_toBottomOf="@+id/bGoogle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

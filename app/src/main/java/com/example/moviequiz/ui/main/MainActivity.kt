@@ -12,16 +12,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.moviequiz.R
-import com.example.moviequiz.Uteis.Uteis
-import com.example.moviequiz.models.MovieChoice
-import com.example.moviequiz.models.Post
 import com.example.moviequiz.models.User
 import com.example.moviequiz.repository.FirebaseRepository
 import com.example.moviequiz.ui.login.LoginActivity
 import com.example.moviequiz.ui.create.CreatePostActivity
+import com.example.moviequiz.ui.main.fragments.FeedFragment
+import com.example.moviequiz.ui.main.fragments.PerfilFragment
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.bottom_navigation_coordinator.*
@@ -31,18 +29,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private var googleSignClient : GoogleSignInClient? = null
+    private lateinit var bottomNavigation: BottomNavigationView
     private lateinit var firestoreRepository: FirebaseRepository
-    private lateinit var user: User;
+    private lateinit var user: User
     private val TAG = "MAIN"
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {it ->
+    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {
         when(it.itemId) {
             R.id.feed -> {
                 mudarFragment("Feed", false, FeedFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.perfil -> {
-                mudarFragment("Perfil", true, PerfilFragment())
+                mudarFragment("Perfil", false, PerfilFragment())
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -66,23 +65,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        firestoreRepository = FirebaseRepository()
-        auth = FirebaseAuth.getInstance()
-        db = FirebaseFirestore.getInstance()
+        initalComponents()
         getUser()
 
-        googleSignClient = firestoreRepository.requestSignInOptions(this)
-        mudarFragment("Feed", false, FeedFragment())
-
-        val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
 //        bottomNavigation.background = ColorDrawable(resources.getColor(R.color.appPrimary))
-        bottomNavigation.background = null;
+        bottomNavigation.background = null
         bottomNavigation.menu.getItem(1).isEnabled = false
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         val launchActivityCreate = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if(result.resultCode == Activity.RESULT_OK){
-                Log.d("MAIN", "VOLTOU")
+                Log.d(TAG, "VOLTOU")
             }
         }
 
@@ -93,23 +86,18 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun addPostMain() {
-        val filme = MovieChoice(Uteis.generatedUid(), "American Pie 3", "https://i.pinimg.com/originals/d4/cc/2c/d4cc2c193ad2ee0b6b9b37e47fb84e7d.jpg")
-        val filme2 = MovieChoice(Uteis.generatedUid(), "American Pie 2", "https://i.pinimg.com/originals/d4/cc/2c/d4cc2c193ad2ee0b6b9b37e47fb84e7d.jpg")
-        val filme3 = MovieChoice(Uteis.generatedUid(), "American Pie 1", "https://i.pinimg.com/originals/d4/cc/2c/d4cc2c193ad2ee0b6b9b37e47fb84e7d.jpg")
+    override fun onStart() {
+        super.onStart()
+        googleSignClient = firestoreRepository.requestSignInOptions(this)
+    }
 
-        //Mandando a Lista Mutavel para o Adapter
-        val post1 = Post(
-            "",
-            "Testando Para mostrar",
-            user.name,
-            user.url,
-            user.idUser,
-            listOf(filme, filme2, filme3),
-            listOf(),
-            Timestamp.now(),
-        )
-        firestoreRepository.addPost(post1)
+    private fun initalComponents() {
+        bottomNavigation = findViewById(R.id.bottom_navigation)
+        firestoreRepository = FirebaseRepository()
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
+
+        mudarFragment("Feed", false, FeedFragment())
     }
 
     private fun mudarFragment(title: String, isTitle: Boolean = true, frag: Fragment) {
@@ -118,7 +106,7 @@ class MainActivity : AppCompatActivity() {
             setLogo(isTitle)
         } else {
             setLogo(isTitle)
-            supportActionBar?.title = null;
+            supportActionBar?.title = null
         }
         changeFragment(frag)
     }
@@ -139,14 +127,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun logout() {
         googleSignClient?.signOut()?.addOnCompleteListener(this) {
-            FirebaseAuth.getInstance().signOut();
+            FirebaseAuth.getInstance().signOut()
             val intent = Intent(applicationContext, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
     }
 
-    fun getUser() {
+    private fun getUser() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         if(currentUser != null) {
             try {
@@ -156,14 +144,12 @@ class MainActivity : AppCompatActivity() {
                     .addOnSuccessListener {
                         val userObject = it.toObject(User::class.java)
                         userObject?.idUser = it.id
-                        Log.d("PERFIL", userObject.toString());
                         if (userObject != null) {
                             user = userObject
-                            Log.d("PERFIL", user.name);
                         }
                     }
             } catch (e: Exception) {
-                Log.e("ERROR PERFIL", "${e.message}");
+                Log.e("ERROR PERFIL", "${e.message}")
             }
         }
     }

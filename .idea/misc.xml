@@ -15,10 +15,12 @@
         <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/drawable/shap_radius_20dp_view.xml" value="0.18026315789473685" />
         <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/drawable/shap_radius_65dp.xml" value="0.16842105263157894" />
         <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/drawable/shap_radius_8dp.xml" value="0.18026315789473685" />
+        <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/drawable/shap_radius_card_check.xml" value="0.1299342105263158" />
         <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/drawable/shap_radius_card_letra.xml" value="0.18026315789473685" />
+        <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/drawable/shap_radius_card_letra_perfil.xml" value="0.1" />
         <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/layout-v28/row_post_movie.xml" value="0.26927083333333335" />
         <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/layout/activity_create_post.xml" value="0.25" />
-        <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/layout/activity_login.xml" value="0.23697916666666666" />
+        <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/layout/activity_main.xml" value="0.21" />
         <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/layout/activity_profile.xml" value="0.2942708333333333" />
         <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/layout/activity_register.xml" value="0.264" />
@@ -26,10 +28,13 @@
         <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/layout/bottom_navigation_coordinator.xml" value="0.22" />
         <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/layout/card_movie_search.xml" value="0.264" />
         <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/layout/card_post.xml" value="0.25" />
+        <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/layout/card_post_perfil.xml" value="0.264" />
         <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/layout/fragment_feed.xml" value="0.18" />
-        <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/layout/fragment_perfil.xml" value="0.25" />
+        <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/layout/fragment_perfil.xml" value="0.16363636363636364" />
         <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/layout/row_movie_card.xml" value="0.5" />
         <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/layout/row_movie_card_create.xml" value="0.33" />
+        <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/layout/row_movie_card_isvoto.xml" value="0.264" />
+        <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/layout/row_movie_card_perfil.xml" value="0.264" />
         <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/layout/row_post_movie.xml" value="0.33" />
         <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/menu/bottom_app_bar.xml" value="0.25052083333333336" />
         <entry key="..\:/Users/Borges/AndroidStudioProjects/MovieQuiz/app/src/main/res/menu/toolbar_menu.xml" value="0.1" />

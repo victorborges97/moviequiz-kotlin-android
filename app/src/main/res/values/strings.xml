@@ -17,8 +17,8 @@
     <string name="cadastre_se_aqui">Cadastre-se aqui!</string>
     <string name="nome">Nome</string>
     <string name="confirma_senha">Confirma Senha</string>
-    <string name="cadastrar">Cadastrar</string>
     <string name="url_imdb_rapidapi">https://imdb8.p.rapidapi.com/</string>
     <string name="rapidapi_host">imdb8.p.rapidapi.com</string>
     <string name="rapidapi_key">5bb075f0f7msh3993b65d661cff5p1ee705jsne6b4637afde0</string>
+    <string name="cadastrar">Cadastrar</string>
 </resources>
