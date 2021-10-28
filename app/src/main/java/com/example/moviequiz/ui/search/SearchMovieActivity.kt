@@ -12,6 +12,7 @@ import com.example.moviequiz.R
 import com.example.moviequiz.models.MovieIMDB
 import com.example.moviequiz.models.ResponseMovieIMDB
 import com.example.moviequiz.services.MovieService
+import com.example.moviequiz.services.NetworkService
 import kotlinx.android.synthetic.main.activity_search_movie.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,8 +20,6 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class SearchMovieActivity : AppCompatActivity() {
     private var listMoviesSearch: MutableList<MovieIMDB> = mutableListOf()
@@ -77,17 +76,14 @@ class SearchMovieActivity : AppCompatActivity() {
     private fun getRetrofit(filme: String) {
         listMoviesSearch.clear()
         changedUiLogin(true)
-        val retrofit =  Retrofit.Builder()
-            .baseUrl(getString(R.string.url_imdb_rapidapi))
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
 
+        val retrofitClient = NetworkService.getRetrofit(getString(R.string.url_imdb_rapidapi))
         val map: HashMap<String, String> = hashMapOf(
             "x-rapidapi-host" to getString(R.string.rapidapi_host),
             "x-rapidapi-key" to getString(R.string.rapidapi_key)
         )
-        val service = retrofit.create(MovieService::class.java)
-        val call = service.list(map, filme)
+        val endpoint = retrofitClient.create(MovieService::class.java)
+        val call = endpoint.list(map, filme)
 
         CoroutineScope(Dispatchers.IO).launch {
 
@@ -109,6 +105,7 @@ class SearchMovieActivity : AppCompatActivity() {
                     }
                 }
                 override fun onFailure(call: Call<ResponseMovieIMDB>, t: Throwable) {
+                    changedUiLogin(false)
                     Log.d("API", "ERROR API: ${t.message}")
                 }
             })

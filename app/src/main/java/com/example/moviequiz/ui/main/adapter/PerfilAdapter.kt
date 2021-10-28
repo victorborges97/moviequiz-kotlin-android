@@ -80,7 +80,13 @@ class PerfilAdapter (
                     quantVotos = isVoto.size
                 }
 
-                val porcentagemVotos = ((100 * quantVotos) / totalVotos).toDouble()
+                val porcentagemVotos: Double;
+                if(totalVotos == 0) {
+                    porcentagemVotos = 0.0;
+                } else {
+                    porcentagemVotos = ((100 * quantVotos) / totalVotos).toDouble()
+                }
+
 
                 val view = LayoutInflater.from(this@MainViewHolder.itemView.context)
                     .inflate(R.layout.row_movie_card_perfil, null, false);

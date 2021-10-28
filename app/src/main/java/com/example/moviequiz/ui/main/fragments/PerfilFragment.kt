@@ -55,6 +55,7 @@ class PerfilFragment : Fragment() {
         }
 
         viewModel.postsUser.observe(viewLifecycleOwner, {
+            Log.d("PERFIL", "LISTA ${it.toString()}")
             val recyclerViewState = rootView.rvPerfilPostsUser.layoutManager?.onSaveInstanceState()
             rootView.rvPerfilPostsUser.adapter = PerfilAdapter(it)
             rootView.rvPerfilPostsUser.adapter?.notifyDataSetChanged()
@@ -97,6 +98,7 @@ class PerfilFragment : Fragment() {
                     .addOnSuccessListener {
                         val userObject = it.toObject(User::class.java)
                         if (userObject != null) {
+                            userObject.idUser = it.id;
                             user = userObject
                             visibleInfor(userObject)
                         }
