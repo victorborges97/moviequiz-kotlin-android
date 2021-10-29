@@ -10,4 +10,5 @@
     <color name="appPrimary">#F4F4F4</color>
 
     <color name="textColoPadrao">#191919</color>
+    <color name="bgCardPost">#F3F3F3</color>
 </resources>

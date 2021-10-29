@@ -105,16 +105,7 @@
                 app:layout_constraintStart_toStartOf="@+id/tvNomePerfilUser"
                 app:layout_constraintTop_toBottomOf="@+id/tvEmailPerfilUser"
                 tools:text="Bio dadd dasd dasda dasd dasd dsah dsahdb dsahdb dasbd dasbd hsbad dasb djbas" />
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/mbSair"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginTop="16dp"
-                android:text="Sair"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvBioPerfilUser" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvPerfilPostsUser"
                 android:layout_width="match_parent"
@@ -122,7 +113,7 @@
                 android:layout_marginTop="16dp"
                 android:overScrollMode="never"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mbSair" />
+                app:layout_constraintTop_toBottomOf="@+id/tvBioPerfilUser" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

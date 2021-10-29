@@ -29,14 +29,12 @@ class PerfilFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var user: User
 
-    private var googleSignClient : GoogleSignInClient? = null
     private lateinit var firestoreRepository: FirebaseRepository
 
     private lateinit var imageViewUser: ImageView
     private lateinit var tvName: TextView
     private lateinit var tvEmail: TextView
     private lateinit var tvBio: TextView
-    private lateinit var mbSair: Button
 
     private lateinit var rootView: View
 
@@ -62,25 +60,14 @@ class PerfilFragment : Fragment() {
             rootView.rvPerfilPostsUser.layoutManager?.onRestoreInstanceState(recyclerViewState)
         })
 
-        mbSair.setOnClickListener {
-            googleSignClient?.signOut()?.addOnSuccessListener {
-                FirebaseAuth.getInstance().signOut()
-                val intent = Intent(rootView.context, LoginActivity::class.java)
-                startActivity(intent)
-                activity?.finish()
-            }
-        }
-
         return rootView
     }
 
     private fun initialComponents() {
         firestoreRepository = FirebaseRepository()
-        googleSignClient = firestoreRepository.requestSignInOptions(rootView.context)
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        mbSair = rootView.findViewById(R.id.mbSair)
         imageViewUser = rootView.findViewById(R.id.ivPerfilUser)
         tvName = rootView.findViewById(R.id.tvNomePerfilUser)
         tvEmail = rootView.findViewById(R.id.tvEmailPerfilUser)

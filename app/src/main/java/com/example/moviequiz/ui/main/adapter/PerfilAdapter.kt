@@ -46,17 +46,17 @@ class PerfilAdapter (
         fun bind(currentItem: Post, position: Int) {
             with(currentItem){
                 itemView.tvTitleMovie.text = this.title
-                itemView.tvNameUser.text = this.userName
+                //itemView.tvNameUser.text = this.userName
 
-                if(this.userPhoto != ""){
-                    Picasso.get().load(this.userPhoto).fit()
-                        .centerCrop()
-                        .into(itemView.ivPhotoUser)
-                } else {
-                    Picasso.get().load(R.drawable.ic_user).fit()
-                        .centerCrop()
-                        .into(itemView.ivPhotoUser)
-                }
+                //if(this.userPhoto != ""){
+                   // Picasso.get().load(this.userPhoto).fit()
+                     //   .centerCrop()
+                      //  .into(itemView.ivPhotoUser)
+                //} else {
+                   // Picasso.get().load(R.drawable.ic_user).fit()
+                    //    .centerCrop()
+                     //   .into(itemView.ivPhotoUser)
+                //}
 
                 itemView.contentSurvey.removeAllViews()
                 setMoviesData(this.movies, this)
