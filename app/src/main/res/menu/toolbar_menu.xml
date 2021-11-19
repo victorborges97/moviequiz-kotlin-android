@@ -4,6 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menu_sobre"
+        android:title="Sobre"
+        app:showAsAction="collapseActionView"/>
+
+    <item
         android:id="@+id/menu_sair"
         android:title="Sair"
         app:showAsAction="collapseActionView"/>

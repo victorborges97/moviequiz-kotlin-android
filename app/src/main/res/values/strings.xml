@@ -22,4 +22,7 @@
     <string name="rapidapi_key">5bb075f0f7msh3993b65d661cff5p1ee705jsne6b4637afde0</string>
     <string name="cadastrar">Cadastrar</string>
     <string name="hint_add_post_activity_create">Coloque o título da sua enquete</string>
+
+    <string name="copy_right">Copyrights © %1$d</string>
+    <string name="description_app">Um app para se descontrair e ver dicas de filmes bons</string>
 </resources>

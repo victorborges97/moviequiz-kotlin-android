@@ -13,6 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieQuiz">
         <activity
+            android:name=".ui.about.AboutActivity"
+            android:parentActivityName=".ui.main.MainActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.search.SearchMovieActivity"
             android:exported="true" />
         <activity

@@ -3,11 +3,8 @@ package com.example.moviequiz.ui.main.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
@@ -15,14 +12,18 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moviequiz.R
 import com.example.moviequiz.models.User
 import com.example.moviequiz.repository.FirebaseRepository
-import com.example.moviequiz.ui.login.LoginActivity
 import com.example.moviequiz.ui.main.adapter.PerfilAdapter
 import com.example.moviequiz.ui.main.view_models.ViewModelFeed
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_perfil.view.*
+import android.view.MenuInflater
+import com.example.moviequiz.ui.about.AboutActivity
+import com.example.moviequiz.ui.login.LoginActivity
+import com.example.moviequiz.ui.main.MainActivity
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+
 
 class PerfilFragment : Fragment() {
     private lateinit var db: FirebaseFirestore
@@ -31,6 +32,8 @@ class PerfilFragment : Fragment() {
 
     private lateinit var firestoreRepository: FirebaseRepository
 
+    private var googleSignClient : GoogleSignInClient? = null
+
     private lateinit var imageViewUser: ImageView
     private lateinit var tvName: TextView
     private lateinit var tvEmail: TextView
@@ -38,11 +41,30 @@ class PerfilFragment : Fragment() {
 
     private lateinit var rootView: View
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar_menu, menu)
+        super.onCreateOptionsMenu(menu!!, inflater)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_sair -> {
+                logout()
+                true
+            }
+            R.id.menu_sobre -> {
+                goToSobre()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         rootView = inflater.inflate(R.layout.fragment_perfil, container, false)
+        setHasOptionsMenu(true);
         initialComponents()
         getUser()
         val viewModel = ViewModelProvider(this)[ViewModelFeed::class.java]
@@ -53,7 +75,6 @@ class PerfilFragment : Fragment() {
         }
 
         viewModel.postsUser.observe(viewLifecycleOwner, {
-            Log.d("PERFIL", "LISTA ${it.toString()}")
             val recyclerViewState = rootView.rvPerfilPostsUser.layoutManager?.onSaveInstanceState()
             rootView.rvPerfilPostsUser.adapter = PerfilAdapter(it)
             rootView.rvPerfilPostsUser.adapter?.notifyDataSetChanged()
@@ -61,6 +82,11 @@ class PerfilFragment : Fragment() {
         })
 
         return rootView
+    }
+
+    override fun onStart() {
+        super.onStart()
+        googleSignClient = firestoreRepository.requestSignInOptions(rootView.context)
     }
 
     private fun initialComponents() {
@@ -109,5 +135,21 @@ class PerfilFragment : Fragment() {
         }
         tvName.text = user.name
         tvEmail.text = user.email
+    }
+
+    private fun logout() {
+        googleSignClient?.signOut()?.addOnCompleteListener {
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(rootView.context, LoginActivity::class.java)
+            activity?.startActivity(intent)
+            activity?.finish()
+        }
+    }
+
+    private fun goToSobre() {
+        activity?.let{
+            val intent = Intent (it, AboutActivity::class.java)
+            it.startActivity(intent)
+        }
     }
 }
