@@ -9,12 +9,13 @@
     <color name="white">#FFFFFFFF</color>
     <color name="appPrimary">#F4F4F4</color>
 
-    <color name="textColoPadrao">#191919</color>
-    <color name="textColorPerfil">#5A5A5A</color>
+    <color name="textColoPadrao">#ffffff</color>
+    <color name="textColorPerfil">#f4f4f4</color>
 
-    <color name="bgAcitivityPrimary">#78B7BB</color>
-    <color name="bgCardPost">#F3F3F3</color>
-    <color name="bgCardItemPost">#F4F4F4</color>
-    <color name="bgFotoPerfil">#ffffff</color>
-    <color name="bgCaixaSearch">#C1C1C1</color>
+    <color name="bgAcitivityPrimary">#0E0E0E</color>
+    <color name="bgCardPost">#232323</color>
+    <color name="bgCardItemPost">#1e1e1e</color>
+    <color name="bgFotoPerfil">#232323</color>
+    <color name="bgCaixaSearch">#232323</color>
+
 </resources>

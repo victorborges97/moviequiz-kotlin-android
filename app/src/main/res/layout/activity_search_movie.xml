@@ -13,14 +13,26 @@
         android:layout_margin="10dp"
         android:background="@drawable/shap_radius_20dp_search"
         android:elevation="2dp"
-        android:backgroundTint="#F0F0F0"
-        android:queryHint="Search Here"
+        android:backgroundTint="@color/bgCaixaSearch"
+        android:queryHint="Pesquise o filme"
         android:textCursorDrawable="@null"
         app:iconifiedByDefault="false"
         app:queryBackground="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tvAvisos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Nenhum resultado encontrado." />
 
     <ProgressBar
         android:id="@+id/progressBarSearch"

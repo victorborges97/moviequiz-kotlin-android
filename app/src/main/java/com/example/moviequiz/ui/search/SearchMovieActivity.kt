@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView.*
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moviequiz.R
 import com.example.moviequiz.models.MovieIMDB
@@ -22,6 +23,9 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
+
+
 
 class SearchMovieActivity : AppCompatActivity() {
     private var listMoviesSearch: MutableList<MovieIMDB> = mutableListOf()
@@ -51,6 +55,9 @@ class SearchMovieActivity : AppCompatActivity() {
 
     private fun initialComponents() {
         supportActionBar?.title = "Pesquisar filmes"
+
+        tvAvisos.text = "Faça sua pesquisa..."
+        tvAvisos.visibility = View.VISIBLE
 
         rvSearchMovie.apply {
             layoutManager = GridLayoutManager(applicationContext, 2)
@@ -84,6 +91,9 @@ class SearchMovieActivity : AppCompatActivity() {
     private fun changedUiLogin(el: Boolean) {
         blocksFields(el)
         progressBarSearch.visibility = if(el) View.VISIBLE else View.INVISIBLE
+         if(tvAvisos.isVisible) {
+             tvAvisos.visibility = View.INVISIBLE
+        }
     }
 
     private fun blocksFields(b: Boolean) {
@@ -109,14 +119,20 @@ class SearchMovieActivity : AppCompatActivity() {
                     if (response.code() == 200) {
                         response.body().let {
                             if (it != null) {
-                                it.results.forEach{ filmeResponse ->
-                                    if(filmeResponse.title.isNotEmpty() && filmeResponse.image?.url.toString().isNotEmpty()){
-                                        listMoviesSearch.add(filmeResponse)
+                                if(it.results.isEmpty()){
+                                    //TODO: LIBERAR MENSAGEM QUE NÂO FOI ENCONTRADO O RESULTADO ESPERADO
+                                    tvAvisos.text = "Nenhume resultado foi encontrado na pesquisa..."
+                                    tvAvisos.visibility = View.VISIBLE
+                                    changedUiLogin(false)
+                                } else {
+                                    it.results.forEach{ filmeResponse ->
+                                        if(filmeResponse.title.isNotEmpty() && filmeResponse.image?.url.toString().isNotEmpty()){
+                                            listMoviesSearch.add(filmeResponse)
+                                        }
                                     }
+                                    changedUiLogin(false)
+                                    setAdapterRv()
                                 }
-                                changedUiLogin(false)
-                                setAdapterRv()
-
                             }
                         }
                     }

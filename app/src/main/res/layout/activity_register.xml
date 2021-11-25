@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/bg_linear_register"
     android:paddingHorizontal="50dp"
-    android:background="@color/colorPrimary"
+    android:background="@color/bgAcitivityPrimary"
     tools:context=".ui.register.RegisterActivity">
 
 
@@ -40,10 +40,10 @@
             android:layout_height="125dp"
             android:layout_marginTop="20dp"
             android:padding="5dp"
-            android:src="@drawable/ic_galery"
+            android:src="@drawable/ic_user"
             app:civ_border_width="4dp"
             app:civ_border_color="#5A5A5A"
-            app:civ_circle_background_color="@color/white"
+            app:civ_circle_background_color="@color/bgFotoPerfil"
             app:layout_constraintEnd_toEndOf="@+id/titulo_register"
             app:layout_constraintStart_toStartOf="@+id/titulo_register"
             app:layout_constraintTop_toBottomOf="@+id/titulo_register"/>
