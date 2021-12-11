@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="20dp"
-
+    android:background="@color/bgCardItemPost"
     android:layout_margin="10dp"
     android:elevation="5dp"
     android:id="@+id/row_post_movie"
@@ -16,7 +16,6 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@color/bgCardItemPost"
         android:layout_height="match_parent">
 
         <View

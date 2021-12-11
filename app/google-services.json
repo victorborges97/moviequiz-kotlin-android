@@ -1,23 +1,32 @@
 {
   "project_info": {
     "project_number": "420693277468",
+    "firebase_url": "https://moviequiz-291ba-default-rtdb.firebaseio.com",
     "project_id": "moviequiz-291ba",
     "storage_bucket": "moviequiz-291ba.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:420693277468:android:98100cd82764adcee418d9",
+        "mobilesdk_app_id": "1:420693277468:android:5a461e9e5daf670ae418d9",
         "android_client_info": {
-          "package_name": "com.example.moviequiz"
+          "package_name": "br.borges.moviequiz"
         }
       },
       "oauth_client": [
         {
-          "client_id": "420693277468-ii8rglcfkpru4m443v9dr3r4e4eojapp.apps.googleusercontent.com",
+          "client_id": "420693277468-3tare2qribdjgjs0pb4u1h6iq5vi0sfa.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.moviequiz",
+            "package_name": "br.borges.moviequiz",
+            "certificate_hash": "8c84d877f9b02e0514f6d02454e2bfbf58bc7d28"
+          }
+        },
+        {
+          "client_id": "420693277468-lc3e28crb9pq6ig8gb34gvlvitb5lgdb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.borges.moviequiz",
             "certificate_hash": "ae6a9028ff7a7715906904e14a17a96e04361cf7"
           }
         },
